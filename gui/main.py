@@ -26,6 +26,7 @@ ARCADECLASSIC = os.path.join(project_directory,
 FONT = pygame.font.Font(ARCADECLASSIC, 32)
 OVER_FONT = pygame.font.Font(ARCADECLASSIC, 50)
 
+
 class GameVariables:
     def __init__(self):
         """All the Game variables"""
@@ -35,11 +36,15 @@ class GameVariables:
         self.clock = pygame.time.Clock()
         self.FPS = 60
         # Images
-        self.x_img = pygame.image.load(os.path.join(project_directory, "img/x.png"))
-        self.o_img = pygame.image.load(os.path.join(project_directory, "img/o.png"))
+        self.x_img = pygame.image.load(
+            os.path.join(project_directory, "img/x.png"))
+        self.o_img = pygame.image.load(
+            os.path.join(project_directory, "img/o.png"))
         self.w_rezise, self.h_rezise = 110, 110
-        self.x_img = pygame.transform.scale(self.x_img, (self.w_rezise, self.h_rezise))
-        self.o_img = pygame.transform.scale(self.o_img, (self.w_rezise, self.h_rezise))
+        self.x_img = pygame.transform.scale(self.x_img,
+                                            (self.w_rezise, self.h_rezise))
+        self.o_img = pygame.transform.scale(self.o_img,
+                                            (self.w_rezise, self.h_rezise))
         # Game state
         self.current_player = "X"
         self.board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
@@ -55,15 +60,24 @@ class GameVariables:
 
 class DrawRectangle:
     def __init__(self):
-        self.first = pygame.draw.rect(game_variable.screen, WHITE, (25, 25, 150, 150))
-        self.second = pygame.draw.rect(game_variable.screen, WHITE, (200, 25, 150, 150))
-        self.third = pygame.draw.rect(game_variable.screen, WHITE, (375, 25, 150, 150))
-        self.fourth = pygame.draw.rect(game_variable.screen, WHITE, (25, 200, 150, 150))
-        self.fifth = pygame.draw.rect(game_variable.screen, WHITE, (200, 200, 150, 150))
-        self.sixth = pygame.draw.rect(game_variable.screen, WHITE, (375, 200, 150, 150))
-        self.seventh = pygame.draw.rect(game_variable.screen, WHITE, (25, 375, 150, 150))
-        self.eighth = pygame.draw.rect(game_variable.screen, WHITE, (200, 375, 150, 150))
-        self.ninth = pygame.draw.rect(game_variable.screen, WHITE, (375, 375, 150, 150))
+        self.first = pygame.draw.rect(game_variable.screen, WHITE,
+                                      (25, 25, 150, 150))
+        self.second = pygame.draw.rect(game_variable.screen, WHITE,
+                                       (200, 25, 150, 150))
+        self.third = pygame.draw.rect(game_variable.screen, WHITE,
+                                      (375, 25, 150, 150))
+        self.fourth = pygame.draw.rect(game_variable.screen, WHITE,
+                                       (25, 200, 150, 150))
+        self.fifth = pygame.draw.rect(game_variable.screen, WHITE,
+                                      (200, 200, 150, 150))
+        self.sixth = pygame.draw.rect(game_variable.screen, WHITE,
+                                      (375, 200, 150, 150))
+        self.seventh = pygame.draw.rect(game_variable.screen, WHITE,
+                                        (25, 375, 150, 150))
+        self.eighth = pygame.draw.rect(game_variable.screen, WHITE,
+                                       (200, 375, 150, 150))
+        self.ninth = pygame.draw.rect(game_variable.screen, WHITE,
+                                      (375, 375, 150, 150))
 
 
 class IsGameEnd:
@@ -106,22 +120,28 @@ class IsGameEnd:
 
     @staticmethod
     def is_board_fill():
-        return game_variable.board[0][0] != 0 and game_variable.board[0][1] != 0 and \
-            game_variable.board[0][2] != 0 and game_variable.board[1][0] != 0 and \
-            game_variable.board[1][1] != 0 and game_variable.board[1][2] != 0 and \
-            game_variable.board[2][0] != 0 and game_variable.board[2][1] != 0 and \
-            game_variable.board[2][2] != 0
+        return game_variable.board[0][0] != 0 and game_variable.board[0][
+            1] != 0 and \
+               game_variable.board[0][2] != 0 and game_variable.board[1][
+                   0] != 0 and \
+               game_variable.board[1][1] != 0 and game_variable.board[1][
+                   2] != 0 and \
+               game_variable.board[2][0] != 0 and game_variable.board[2][
+                   1] != 0 and \
+               game_variable.board[2][2] != 0
 
 
 class DrawScore:
     @staticmethod
     def score_x():
-        score_value = FONT.render("X  " + str(game_variable.x_score), True, WHITE)
+        score_value = FONT.render("X  " + str(game_variable.x_score), True,
+                                  WHITE)
         game_variable.screen.blit(score_value, (50, 550))
 
     @staticmethod
     def score_o():
-        score_value = FONT.render("O  " + str(game_variable.o_score), True, WHITE)
+        score_value = FONT.render("O  " + str(game_variable.o_score), True,
+                                  WHITE)
         game_variable.screen.blit(score_value, (50, 600))
 
 
@@ -130,7 +150,8 @@ class DrawWonText:
     def draw_text_won():
         if game_variable.won_x:
             over_text = OVER_FONT.render("X won", True, LIGHT_BLUE)
-            space_text = OVER_FONT.render("Space bar for clear", True, LIGHT_BLUE)
+            space_text = OVER_FONT.render("Space bar for clear", True,
+                                          LIGHT_BLUE)
             game_variable.screen.blit(over_text, (220, 200))
             game_variable.screen.blit(space_text, (50, 300))
         elif game_variable.won_o:
@@ -172,28 +193,32 @@ class AI:
             game_variable.board[0][2] = 2
             game_variable.current_player_turn = "X"
 
-        elif game_variable.board[0][1] == 1 and game_variable.board[0][2] == 1 and game_variable.board[0][0] == 0:
+        elif game_variable.board[0][1] == 1 and game_variable.board[0][
+                2] == 1 and game_variable.board[0][0] == 0:
             x = [50, 225, 400][0]
             y = [50, 225, 400][0]
             game_variable.board[0][0] = 2
             game_variable.screen.blit(game_variable.o_img, (x, y))
             game_variable.current_player_turn = "X"
 
-        elif game_variable.board[1][1] == 1 and game_variable.board[1][2] == 1 and game_variable.board[0][1] == 0:
+        elif game_variable.board[1][1] == 1 and game_variable.board[1][
+                2] == 1 and game_variable.board[0][1] == 0:
             x = [50, 225, 400][0]
             y = [50, 225, 400][1]
             game_variable.board[1][0] = 2
             game_variable.screen.blit(game_variable.o_img, (x, y))
             game_variable.current_player_turn = "X"
 
-        elif game_variable.board[2][1] == 1 and game_variable.board[2][2] == 1 and game_variable.board[2][0] == 0:
+        elif game_variable.board[2][1] == 1 and game_variable.board[2][
+                2] == 1 and game_variable.board[2][0] == 0:
             x = [50, 225, 400][0]
             y = [50, 225, 400][2]
             game_variable.board[2][0] = 2
             game_variable.screen.blit(game_variable.o_img, (x, y))
             game_variable.current_player_turn = "X"
 
-        elif game_variable.board[0][0] == 1 and game_variable.board[1][0] == 1 and game_variable.board[2][0] == 0:
+        elif game_variable.board[0][0] == 1 and game_variable.board[1][
+                0] == 1 and game_variable.board[2][0] == 0:
             x = [50, 225, 400][0]
             y = [50, 225, 400][2]
             game_variable.board[2][0] = 2
@@ -217,7 +242,8 @@ class GameLogic:
         pos = pygame.mouse.get_pos()
 
         if game_variable.won is not True:
-            if draw_rectangle.first.collidepoint(pos) and game_variable.board[0][0] == 0:
+            if draw_rectangle.first.collidepoint(pos) and \
+                    game_variable.board[0][0] == 0:
                 if game_variable.current_player == "X":
                     game_variable.screen.blit(game_variable.x_img, (50, 50))
                     game_variable.board[0][0] = 1
@@ -225,7 +251,8 @@ class GameLogic:
                         ai.best_ai()
                         ai.flip_ai_player()
 
-            if draw_rectangle.second.collidepoint(pos) and game_variable.board[0][1] == 0:
+            if draw_rectangle.second.collidepoint(pos) and \
+                    game_variable.board[0][1] == 0:
                 if game_variable.current_player == "X":
                     game_variable.screen.blit(game_variable.x_img, (225, 50))
                     game_variable.board[0][1] = 1
@@ -233,7 +260,8 @@ class GameLogic:
                         ai.best_ai()
                         ai.flip_ai_player()
 
-            if draw_rectangle.third.collidepoint(pos) and game_variable.board[0][2] == 0:
+            if draw_rectangle.third.collidepoint(pos) and \
+                    game_variable.board[0][2] == 0:
                 if game_variable.current_player == "X":
                     game_variable.screen.blit(game_variable.x_img, (400, 50))
                     game_variable.board[0][2] = 1
@@ -241,7 +269,8 @@ class GameLogic:
                         ai.best_ai()
                         ai.flip_ai_player()
 
-            if draw_rectangle.fourth.collidepoint(pos) and game_variable.board[1][0] == 0:
+            if draw_rectangle.fourth.collidepoint(pos) and \
+                    game_variable.board[1][0] == 0:
                 if game_variable.current_player == "X":
                     game_variable.screen.blit(game_variable.x_img, (50, 225))
                     game_variable.board[1][0] = 1
@@ -249,7 +278,8 @@ class GameLogic:
                         ai.best_ai()
                         ai.flip_ai_player()
 
-            if draw_rectangle.fifth.collidepoint(pos) and game_variable.board[1][1] == 0:
+            if draw_rectangle.fifth.collidepoint(pos) and \
+                    game_variable.board[1][1] == 0:
                 if game_variable.current_player == "X":
                     game_variable.screen.blit(game_variable.x_img, (225, 225))
                     game_variable.board[1][1] = 1
@@ -257,7 +287,8 @@ class GameLogic:
                         ai.best_ai()
                         ai.flip_ai_player()
 
-            if draw_rectangle.sixth.collidepoint(pos) and game_variable.board[1][2] == 0:
+            if draw_rectangle.sixth.collidepoint(pos) and \
+                    game_variable.board[1][2] == 0:
                 if game_variable.current_player == "X":
                     game_variable.screen.blit(game_variable.x_img, (400, 225))
                     game_variable.board[1][2] = 1
@@ -265,7 +296,8 @@ class GameLogic:
                         ai.best_ai()
                         ai.flip_ai_player()
 
-            if draw_rectangle.seventh.collidepoint(pos) and game_variable.board[2][0] == 0:
+            if draw_rectangle.seventh.collidepoint(pos) and \
+                    game_variable.board[2][0] == 0:
                 if game_variable.current_player == "X":
                     game_variable.screen.blit(game_variable.x_img, (50, 400))
                     game_variable.board[2][0] = 1
@@ -273,7 +305,8 @@ class GameLogic:
                         ai.best_ai()
                         ai.flip_ai_player()
 
-            if draw_rectangle.eighth.collidepoint(pos) and game_variable.board[2][1] == 0:
+            if draw_rectangle.eighth.collidepoint(pos) and \
+                    game_variable.board[2][1] == 0:
                 if game_variable.current_player == "X":
                     game_variable.screen.blit(game_variable.x_img, (225, 400))
                     game_variable.board[2][1] = 1
@@ -281,7 +314,8 @@ class GameLogic:
                         ai.best_ai()
                         ai.flip_ai_player()
 
-            if draw_rectangle.ninth.collidepoint(pos) and game_variable.board[2][2] == 0:
+            if draw_rectangle.ninth.collidepoint(pos) and \
+                    game_variable.board[2][2] == 0:
                 if game_variable.current_player == "X":
                     game_variable.screen.blit(game_variable.x_img, (400, 400))
                     game_variable.board[2][2] = 1
@@ -326,7 +360,8 @@ while True:
             is_game_end.check_win(is_game_end.num)
             is_game_end.num()
 
-            if game_variable.won_x is False and game_variable.won_o is False and is_game_end.is_board_fill():
+            if (game_variable.won_x is False and game_variable.won_o is
+                    False and is_game_end.is_board_fill()):
                 draw_won_text.tie()
 
             if game_variable.is_game_end is False:
