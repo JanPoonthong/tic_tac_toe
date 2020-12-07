@@ -34,7 +34,7 @@ class GameVariables:
         self.width, self.height = 550, 650
         self.screen = pygame.display.set_mode((self.width, self.height))
         self.clock = pygame.time.Clock()
-        self.FPS = 60
+        self.fps = 60
         # Images
         self.x_img = pygame.image.load(
             os.path.join(project_directory, "img/x.png"))
@@ -114,6 +114,7 @@ class IsGameEnd:
             return True
 
     def num(self):
+        """Check if player = 1 win or computer = 2"""
         if self.check_win(1):
             game_variable.won_x = True
         elif self.check_win(2):
@@ -135,12 +136,14 @@ class IsGameEnd:
 class DrawScore:
     @staticmethod
     def score_x():
+        """Draw the score for X"""
         score_value = FONT.render("X  " + str(game_variable.x_score), True,
                                   WHITE)
         game_variable.screen.blit(score_value, (50, 550))
 
     @staticmethod
     def score_o():
+        """Draw the score for O"""
         score_value = FONT.render("O  " + str(game_variable.o_score), True,
                                   WHITE)
         game_variable.screen.blit(score_value, (50, 600))
@@ -149,6 +152,7 @@ class DrawScore:
 class DrawWonText:
     @staticmethod
     def draw_text_won():
+        """When someone won, this function will run"""
         if game_variable.won_x:
             over_text = OVER_FONT.render("X won", True, LIGHT_BLUE)
             space_text = OVER_FONT.render("Space bar for clear", True,
@@ -163,6 +167,7 @@ class DrawWonText:
 
     @staticmethod
     def tie():
+        """When game tie, this function will run"""
         tie_text = OVER_FONT.render("Tie", True, DARK_BLUE)
         space_text = OVER_FONT.render("Space bar for clear", True, DARK_BLUE)
         game_variable.screen.blit(tie_text, (220, 200))
@@ -172,18 +177,20 @@ class DrawWonText:
 class AI:
     @staticmethod
     def pick_random_ai():
+        """AI pick on the random board after best_ai()"""
         while game_variable.current_player_turn == "Computer":
             row = random.randint(0, 2)
             column = random.randint(0, 2)
-            x = [50, 225, 400][column]
-            y = [50, 225, 400][row]
+            x_pos = [50, 225, 400][column]
+            y_pos = [50, 225, 400][row]
             if game_variable.board[row][column] == 0:
-                game_variable.screen.blit(game_variable.o_img, (x, y))
+                game_variable.screen.blit(game_variable.o_img, (x_pos, y_pos))
                 game_variable.board[row][column] = 2
                 game_variable.current_player_turn = "X"
 
     @staticmethod
     def best_ai():
+        """Hardcode path for ai"""
         if game_variable.board[1][1] == 0:
             game_variable.screen.blit(game_variable.o_img, (225, 225))
             game_variable.board[1][1] = 2
@@ -196,34 +203,34 @@ class AI:
 
         elif game_variable.board[0][1] == 1 and game_variable.board[0][
                 2] == 1 and game_variable.board[0][0] == 0:
-            x = [50, 225, 400][0]
-            y = [50, 225, 400][0]
+            x_pos = [50, 225, 400][0]
+            y_pos = [50, 225, 400][0]
             game_variable.board[0][0] = 2
-            game_variable.screen.blit(game_variable.o_img, (x, y))
+            game_variable.screen.blit(game_variable.o_img, (x_pos, y_pos))
             game_variable.current_player_turn = "X"
 
         elif game_variable.board[1][1] == 1 and game_variable.board[1][
                 2] == 1 and game_variable.board[0][1] == 0:
-            x = [50, 225, 400][0]
-            y = [50, 225, 400][1]
+            x_pos = [50, 225, 400][0]
+            y_pos = [50, 225, 400][1]
             game_variable.board[1][0] = 2
-            game_variable.screen.blit(game_variable.o_img, (x, y))
+            game_variable.screen.blit(game_variable.o_img, (x_pos, y_pos))
             game_variable.current_player_turn = "X"
 
         elif game_variable.board[2][1] == 1 and game_variable.board[2][
                 2] == 1 and game_variable.board[2][0] == 0:
-            x = [50, 225, 400][0]
-            y = [50, 225, 400][2]
+            x_pos = [50, 225, 400][0]
+            y_pos = [50, 225, 400][2]
             game_variable.board[2][0] = 2
-            game_variable.screen.blit(game_variable.o_img, (x, y))
+            game_variable.screen.blit(game_variable.o_img, (x_pos, y_pos))
             game_variable.current_player_turn = "X"
 
         elif game_variable.board[0][0] == 1 and game_variable.board[1][
                 0] == 1 and game_variable.board[2][0] == 0:
-            x = [50, 225, 400][0]
-            y = [50, 225, 400][2]
+            x_pos = [50, 225, 400][0]
+            y_pos = [50, 225, 400][2]
             game_variable.board[2][0] = 2
-            game_variable.screen.blit(game_variable.o_img, (x, y))
+            game_variable.screen.blit(game_variable.o_img, (x_pos, y_pos))
             game_variable.current_player_turn = "X"
 
         else:
@@ -231,6 +238,7 @@ class AI:
 
     @staticmethod
     def flip_ai_player():
+        """Change turns for player and computer"""
         if game_variable.current_player_turn == "X":
             game_variable.current_player_turn = "Computer"
         elif game_variable.current_player_turn == "Computer":
@@ -239,90 +247,93 @@ class AI:
 
 class GameLogic:
     @staticmethod
-    def logic_handing():
+    def logic_handling():
+        """All the logic handling happens here"""
         pos = pygame.mouse.get_pos()
 
-        if game_variable.won is not True:
-            if draw_rectangle.first.collidepoint(pos) and \
-                    game_variable.board[0][0] == 0:
-                if game_variable.current_player == "X":
-                    game_variable.screen.blit(game_variable.x_img, (50, 50))
-                    game_variable.board[0][0] = 1
-                    if not is_game_end.is_board_fill():
-                        ai.best_ai()
-                        ai.flip_ai_player()
+        if game_variable.won:
+            return
 
-            if draw_rectangle.second.collidepoint(pos) and \
-                    game_variable.board[0][1] == 0:
-                if game_variable.current_player == "X":
-                    game_variable.screen.blit(game_variable.x_img, (225, 50))
-                    game_variable.board[0][1] = 1
-                    if not is_game_end.is_board_fill():
-                        ai.best_ai()
-                        ai.flip_ai_player()
+        if draw_rectangle.first.collidepoint(pos) and \
+                game_variable.board[0][0] == 0:
+            if game_variable.current_player == "X":
+                game_variable.screen.blit(game_variable.x_img, (50, 50))
+                game_variable.board[0][0] = 1
+                if not is_game_end.is_board_fill():
+                    ai.best_ai()
+                    ai.flip_ai_player()
 
-            if draw_rectangle.third.collidepoint(pos) and \
-                    game_variable.board[0][2] == 0:
-                if game_variable.current_player == "X":
-                    game_variable.screen.blit(game_variable.x_img, (400, 50))
-                    game_variable.board[0][2] = 1
-                    if not is_game_end.is_board_fill():
-                        ai.best_ai()
-                        ai.flip_ai_player()
+        if draw_rectangle.second.collidepoint(pos) and \
+                game_variable.board[0][1] == 0:
+            if game_variable.current_player == "X":
+                game_variable.screen.blit(game_variable.x_img, (225, 50))
+                game_variable.board[0][1] = 1
+                if not is_game_end.is_board_fill():
+                    ai.best_ai()
+                    ai.flip_ai_player()
 
-            if draw_rectangle.fourth.collidepoint(pos) and \
-                    game_variable.board[1][0] == 0:
-                if game_variable.current_player == "X":
-                    game_variable.screen.blit(game_variable.x_img, (50, 225))
-                    game_variable.board[1][0] = 1
-                    if not is_game_end.is_board_fill():
-                        ai.best_ai()
-                        ai.flip_ai_player()
+        if draw_rectangle.third.collidepoint(pos) and \
+                game_variable.board[0][2] == 0:
+            if game_variable.current_player == "X":
+                game_variable.screen.blit(game_variable.x_img, (400, 50))
+                game_variable.board[0][2] = 1
+                if not is_game_end.is_board_fill():
+                    ai.best_ai()
+                    ai.flip_ai_player()
 
-            if draw_rectangle.fifth.collidepoint(pos) and \
-                    game_variable.board[1][1] == 0:
-                if game_variable.current_player == "X":
-                    game_variable.screen.blit(game_variable.x_img, (225, 225))
-                    game_variable.board[1][1] = 1
-                    if not is_game_end.is_board_fill():
-                        ai.best_ai()
-                        ai.flip_ai_player()
+        if draw_rectangle.fourth.collidepoint(pos) and \
+                game_variable.board[1][0] == 0:
+            if game_variable.current_player == "X":
+                game_variable.screen.blit(game_variable.x_img, (50, 225))
+                game_variable.board[1][0] = 1
+                if not is_game_end.is_board_fill():
+                    ai.best_ai()
+                    ai.flip_ai_player()
 
-            if draw_rectangle.sixth.collidepoint(pos) and \
-                    game_variable.board[1][2] == 0:
-                if game_variable.current_player == "X":
-                    game_variable.screen.blit(game_variable.x_img, (400, 225))
-                    game_variable.board[1][2] = 1
-                    if not is_game_end.is_board_fill():
-                        ai.best_ai()
-                        ai.flip_ai_player()
+        if draw_rectangle.fifth.collidepoint(pos) and \
+                game_variable.board[1][1] == 0:
+            if game_variable.current_player == "X":
+                game_variable.screen.blit(game_variable.x_img, (225, 225))
+                game_variable.board[1][1] = 1
+                if not is_game_end.is_board_fill():
+                    ai.best_ai()
+                    ai.flip_ai_player()
 
-            if draw_rectangle.seventh.collidepoint(pos) and \
-                    game_variable.board[2][0] == 0:
-                if game_variable.current_player == "X":
-                    game_variable.screen.blit(game_variable.x_img, (50, 400))
-                    game_variable.board[2][0] = 1
-                    if not is_game_end.is_board_fill():
-                        ai.best_ai()
-                        ai.flip_ai_player()
+        if draw_rectangle.sixth.collidepoint(pos) and \
+                game_variable.board[1][2] == 0:
+            if game_variable.current_player == "X":
+                game_variable.screen.blit(game_variable.x_img, (400, 225))
+                game_variable.board[1][2] = 1
+                if not is_game_end.is_board_fill():
+                    ai.best_ai()
+                    ai.flip_ai_player()
 
-            if draw_rectangle.eighth.collidepoint(pos) and \
-                    game_variable.board[2][1] == 0:
-                if game_variable.current_player == "X":
-                    game_variable.screen.blit(game_variable.x_img, (225, 400))
-                    game_variable.board[2][1] = 1
-                    if not is_game_end.is_board_fill():
-                        ai.best_ai()
-                        ai.flip_ai_player()
+        if draw_rectangle.seventh.collidepoint(pos) and \
+                game_variable.board[2][0] == 0:
+            if game_variable.current_player == "X":
+                game_variable.screen.blit(game_variable.x_img, (50, 400))
+                game_variable.board[2][0] = 1
+                if not is_game_end.is_board_fill():
+                    ai.best_ai()
+                    ai.flip_ai_player()
 
-            if draw_rectangle.ninth.collidepoint(pos) and \
-                    game_variable.board[2][2] == 0:
-                if game_variable.current_player == "X":
-                    game_variable.screen.blit(game_variable.x_img, (400, 400))
-                    game_variable.board[2][2] = 1
-                    if not is_game_end.is_board_fill():
-                        ai.best_ai()
-                        ai.flip_ai_player()
+        if draw_rectangle.eighth.collidepoint(pos) and \
+                game_variable.board[2][1] == 0:
+            if game_variable.current_player == "X":
+                game_variable.screen.blit(game_variable.x_img, (225, 400))
+                game_variable.board[2][1] = 1
+                if not is_game_end.is_board_fill():
+                    ai.best_ai()
+                    ai.flip_ai_player()
+
+        if draw_rectangle.ninth.collidepoint(pos) and \
+                game_variable.board[2][2] == 0:
+            if game_variable.current_player == "X":
+                game_variable.screen.blit(game_variable.x_img, (400, 400))
+                game_variable.board[2][2] = 1
+                if not is_game_end.is_board_fill():
+                    ai.best_ai()
+                    ai.flip_ai_player()
 
 
 game_variable = GameVariables()
@@ -335,7 +346,7 @@ draw_rectangle = DrawRectangle()
 
 while True:
     CLICK = pygame.mouse.get_pressed()
-    game_variable.clock.tick(game_variable.FPS)
+    game_variable.clock.tick(game_variable.fps)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -354,7 +365,7 @@ while True:
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             try:
-                game_logic.logic_handing()
+                game_logic.logic_handling()
             except NameError:
                 pass
 
