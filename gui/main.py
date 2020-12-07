@@ -78,6 +78,20 @@ class GameVariables:
         ninth = pygame.draw.rect(self.screen, WHITE,
                                  (375, 375, 150, 150))
 
+    def logic_handling(self):
+        """All the logic handling happens here"""
+        if game_variable.won:
+            return
+        is_player_click(self.first, 0, 0, 50, 50)
+        is_player_click(self.second, 0, 1, 225, 50)
+        is_player_click(self.third, 0, 2, 400, 50)
+        is_player_click(self.fourth, 1, 0, 50, 225)
+        is_player_click(self.fifth, 1, 1, 225, 225)
+        is_player_click(self.sixth, 1, 2, 400, 225)
+        is_player_click(self.seventh, 2, 0, 50, 400)
+        is_player_click(self.eighth, 2, 1, 225, 400)
+        is_player_click(self.ninth, 2, 2, 400, 400)
+
 
 class IsGameEnd:
     @staticmethod
@@ -259,21 +273,6 @@ def is_player_click(position, index_board, index_board_two, x_pos, o_pos):
                 ai.flip_ai_player()
 
 
-def logic_handling():
-    """All the logic handling happens here"""
-    if game_variable.won:
-        return
-    is_player_click(game_variable.first, 0, 0, 50, 50)
-    is_player_click(game_variable.second, 0, 1, 225, 50)
-    is_player_click(game_variable.third, 0, 2, 400, 50)
-    is_player_click(game_variable.fourth, 1, 0, 50, 225)
-    is_player_click(game_variable.fifth, 1, 1, 225, 225)
-    is_player_click(game_variable.sixth, 1, 2, 400, 225)
-    is_player_click(game_variable.seventh, 2, 0, 50, 400)
-    is_player_click(game_variable.eighth, 2, 1, 225, 400)
-    is_player_click(game_variable.ninth, 2, 2, 400, 400)
-
-
 game_variable = GameVariables()
 is_game_end = IsGameEnd()
 draw_score = DrawScore()
@@ -300,7 +299,7 @@ while True:
                 ai.flip_ai_player()
         if event.type == pygame.MOUSEBUTTONDOWN:
             try:
-                logic_handling()
+                game_variable.logic_handling()
             except NameError:
                 pass
             is_game_end.check_win(is_game_end.num)
