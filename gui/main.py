@@ -113,11 +113,12 @@ class IsGameEnd:
         else:
             return True
 
-    def num(self):
+    @staticmethod
+    def num():
         """Check if player = 1 win or computer = 2"""
-        if self.check_win(1):
+        if is_game_end.check_win(1):
             game_variable.won_x = True
-        elif self.check_win(2):
+        elif is_game_end.check_win(2):
             game_variable.won_o = True
 
     @staticmethod
@@ -245,95 +246,33 @@ class AI:
             game_variable.current_player_turn = "X"
 
 
+def is_player_click(position, index_board, index_board_two, x_pos, o_pos):
+    pos = pygame.mouse.get_pos()
+    if (position.collidepoint(pos) and game_variable.board[index_board][
+            index_board_two] == 0):
+        if game_variable.current_player == "X":
+            game_variable.screen.blit(game_variable.x_img, (x_pos, o_pos))
+            game_variable.board[index_board][index_board_two] = 1
+            if not is_game_end.is_board_fill():
+                ai.best_ai()
+                ai.flip_ai_player()
+
+
 class GameLogic:
     @staticmethod
     def logic_handling():
         """All the logic handling happens here"""
-        pos = pygame.mouse.get_pos()
-
         if game_variable.won:
             return
-
-        if draw_rectangle.first.collidepoint(pos) and \
-                game_variable.board[0][0] == 0:
-            if game_variable.current_player == "X":
-                game_variable.screen.blit(game_variable.x_img, (50, 50))
-                game_variable.board[0][0] = 1
-                if not is_game_end.is_board_fill():
-                    ai.best_ai()
-                    ai.flip_ai_player()
-
-        if draw_rectangle.second.collidepoint(pos) and \
-                game_variable.board[0][1] == 0:
-            if game_variable.current_player == "X":
-                game_variable.screen.blit(game_variable.x_img, (225, 50))
-                game_variable.board[0][1] = 1
-                if not is_game_end.is_board_fill():
-                    ai.best_ai()
-                    ai.flip_ai_player()
-
-        if draw_rectangle.third.collidepoint(pos) and \
-                game_variable.board[0][2] == 0:
-            if game_variable.current_player == "X":
-                game_variable.screen.blit(game_variable.x_img, (400, 50))
-                game_variable.board[0][2] = 1
-                if not is_game_end.is_board_fill():
-                    ai.best_ai()
-                    ai.flip_ai_player()
-
-        if draw_rectangle.fourth.collidepoint(pos) and \
-                game_variable.board[1][0] == 0:
-            if game_variable.current_player == "X":
-                game_variable.screen.blit(game_variable.x_img, (50, 225))
-                game_variable.board[1][0] = 1
-                if not is_game_end.is_board_fill():
-                    ai.best_ai()
-                    ai.flip_ai_player()
-
-        if draw_rectangle.fifth.collidepoint(pos) and \
-                game_variable.board[1][1] == 0:
-            if game_variable.current_player == "X":
-                game_variable.screen.blit(game_variable.x_img, (225, 225))
-                game_variable.board[1][1] = 1
-                if not is_game_end.is_board_fill():
-                    ai.best_ai()
-                    ai.flip_ai_player()
-
-        if draw_rectangle.sixth.collidepoint(pos) and \
-                game_variable.board[1][2] == 0:
-            if game_variable.current_player == "X":
-                game_variable.screen.blit(game_variable.x_img, (400, 225))
-                game_variable.board[1][2] = 1
-                if not is_game_end.is_board_fill():
-                    ai.best_ai()
-                    ai.flip_ai_player()
-
-        if draw_rectangle.seventh.collidepoint(pos) and \
-                game_variable.board[2][0] == 0:
-            if game_variable.current_player == "X":
-                game_variable.screen.blit(game_variable.x_img, (50, 400))
-                game_variable.board[2][0] = 1
-                if not is_game_end.is_board_fill():
-                    ai.best_ai()
-                    ai.flip_ai_player()
-
-        if draw_rectangle.eighth.collidepoint(pos) and \
-                game_variable.board[2][1] == 0:
-            if game_variable.current_player == "X":
-                game_variable.screen.blit(game_variable.x_img, (225, 400))
-                game_variable.board[2][1] = 1
-                if not is_game_end.is_board_fill():
-                    ai.best_ai()
-                    ai.flip_ai_player()
-
-        if draw_rectangle.ninth.collidepoint(pos) and \
-                game_variable.board[2][2] == 0:
-            if game_variable.current_player == "X":
-                game_variable.screen.blit(game_variable.x_img, (400, 400))
-                game_variable.board[2][2] = 1
-                if not is_game_end.is_board_fill():
-                    ai.best_ai()
-                    ai.flip_ai_player()
+        is_player_click(draw_rectangle.first, 0, 0, 50, 50)
+        is_player_click(draw_rectangle.second, 0, 1, 225, 50)
+        is_player_click(draw_rectangle.third, 0, 2, 400, 50)
+        is_player_click(draw_rectangle.fourth, 1, 0, 50, 225)
+        is_player_click(draw_rectangle.fifth, 1, 1, 225, 225)
+        is_player_click(draw_rectangle.sixth, 1, 2, 400, 225)
+        is_player_click(draw_rectangle.seventh, 2, 0, 50, 400)
+        is_player_click(draw_rectangle.eighth, 2, 1, 225, 400)
+        is_player_click(draw_rectangle.ninth, 2, 2, 400, 400)
 
 
 game_variable = GameVariables()
@@ -362,20 +301,17 @@ while True:
                 DrawRectangle()
                 ai.best_ai()
                 ai.flip_ai_player()
-
         if event.type == pygame.MOUSEBUTTONDOWN:
             try:
                 game_logic.logic_handling()
             except NameError:
                 pass
-
             is_game_end.check_win(is_game_end.num)
             is_game_end.num()
 
             if (game_variable.won_x is False and game_variable.won_o is
                     False and is_game_end.is_board_fill()):
                 draw_won_text.tie()
-
             if game_variable.is_game_end is False:
                 if is_game_end.check_win(1):
                     game_variable.is_game_end = True
@@ -385,10 +321,7 @@ while True:
                     game_variable.is_game_end = True
                     game_variable.won = True
                     game_variable.o_score += 1
-
             draw_won_text.draw_text_won()
-
         draw_score.score_x()
         draw_score.score_o()
-
     pygame.display.update()
