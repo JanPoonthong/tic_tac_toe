@@ -247,6 +247,8 @@ class AI:
 
 
 def is_player_click(position, index_board, index_board_two, x_pos, o_pos):
+    """Check all the logic here, including mouse click, placeing images,
+    updaing the board"""
     pos = pygame.mouse.get_pos()
     if (position.collidepoint(pos) and game_variable.board[index_board][
             index_board_two] == 0):
@@ -257,22 +259,19 @@ def is_player_click(position, index_board, index_board_two, x_pos, o_pos):
                 ai.best_ai()
                 ai.flip_ai_player()
 
-
-class GameLogic:
-    @staticmethod
-    def logic_handling():
-        """All the logic handling happens here"""
-        if game_variable.won:
-            return
-        is_player_click(draw_rectangle.first, 0, 0, 50, 50)
-        is_player_click(draw_rectangle.second, 0, 1, 225, 50)
-        is_player_click(draw_rectangle.third, 0, 2, 400, 50)
-        is_player_click(draw_rectangle.fourth, 1, 0, 50, 225)
-        is_player_click(draw_rectangle.fifth, 1, 1, 225, 225)
-        is_player_click(draw_rectangle.sixth, 1, 2, 400, 225)
-        is_player_click(draw_rectangle.seventh, 2, 0, 50, 400)
-        is_player_click(draw_rectangle.eighth, 2, 1, 225, 400)
-        is_player_click(draw_rectangle.ninth, 2, 2, 400, 400)
+def logic_handling():
+    """All the logic handling happens here"""
+    if game_variable.won:
+        return
+    is_player_click(draw_rectangle.first, 0, 0, 50, 50)
+    is_player_click(draw_rectangle.second, 0, 1, 225, 50)
+    is_player_click(draw_rectangle.third, 0, 2, 400, 50)
+    is_player_click(draw_rectangle.fourth, 1, 0, 50, 225)
+    is_player_click(draw_rectangle.fifth, 1, 1, 225, 225)
+    is_player_click(draw_rectangle.sixth, 1, 2, 400, 225)
+    is_player_click(draw_rectangle.seventh, 2, 0, 50, 400)
+    is_player_click(draw_rectangle.eighth, 2, 1, 225, 400)
+    is_player_click(draw_rectangle.ninth, 2, 2, 400, 400)
 
 
 game_variable = GameVariables()
@@ -280,7 +279,6 @@ is_game_end = IsGameEnd()
 draw_score = DrawScore()
 draw_won_text = DrawWonText()
 ai = AI()
-game_logic = GameLogic()
 draw_rectangle = DrawRectangle()
 
 while True:
@@ -303,7 +301,7 @@ while True:
                 ai.flip_ai_player()
         if event.type == pygame.MOUSEBUTTONDOWN:
             try:
-                game_logic.logic_handling()
+                logic_handling()
             except NameError:
                 pass
             is_game_end.check_win(is_game_end.num)
