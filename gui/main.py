@@ -56,27 +56,37 @@ class GameVariables:
         self.is_click = "not click"
         self.is_game_end = False
         self.current_player_turn = "X"
+        # Rects
+        self.first = None
+        self.second = None
+        self.third = None
+        self.fourth = None
+        self.fifth = None
+        self.sixth = None
+        self.seventh = None
+        self.eighth = None
+        self.ninth = None
 
     def rects(self):
         """Draw all the nine box for place x and o images"""
-        first = pygame.draw.rect(self.screen, WHITE,
-                                 (25, 25, 150, 150))
-        second = pygame.draw.rect(self.screen, WHITE,
-                                  (200, 25, 150, 150))
-        third = pygame.draw.rect(self.screen, WHITE,
-                                 (375, 25, 150, 150))
-        fourth = pygame.draw.rect(self.screen, WHITE,
-                                  (25, 200, 150, 150))
-        fifth = pygame.draw.rect(self.screen, WHITE,
-                                 (200, 200, 150, 150))
-        sixth = pygame.draw.rect(self.screen, WHITE,
-                                 (375, 200, 150, 150))
-        seventh = pygame.draw.rect(self.screen, WHITE,
-                                   (25, 375, 150, 150))
-        eighth = pygame.draw.rect(self.screen, WHITE,
-                                  (200, 375, 150, 150))
-        ninth = pygame.draw.rect(self.screen, WHITE,
-                                 (375, 375, 150, 150))
+        self.first = pygame.draw.rect(self.screen, WHITE,
+                                      (25, 25, 150, 150))
+        self.second = pygame.draw.rect(self.screen, WHITE,
+                                       (200, 25, 150, 150))
+        self.third = pygame.draw.rect(self.screen, WHITE,
+                                      (375, 25, 150, 150))
+        self.fourth = pygame.draw.rect(self.screen, WHITE,
+                                       (25, 200, 150, 150))
+        self.fifth = pygame.draw.rect(self.screen, WHITE,
+                                      (200, 200, 150, 150))
+        self.sixth = pygame.draw.rect(self.screen, WHITE,
+                                      (375, 200, 150, 150))
+        self.seventh = pygame.draw.rect(self.screen, WHITE,
+                                        (25, 375, 150, 150))
+        self.eighth = pygame.draw.rect(self.screen, WHITE,
+                                       (200, 375, 150, 150))
+        self.ninth = pygame.draw.rect(self.screen, WHITE,
+                                      (375, 375, 150, 150))
 
     def logic_handling(self):
         """All the logic handling happens here"""
