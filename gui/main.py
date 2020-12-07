@@ -58,7 +58,7 @@ class GameVariables:
         self.current_player_turn = "X"
 
     def rects(self):
-        # Draw all the nine box for place x and o images
+        """Draw all the nine box for place x and o images"""
         first = pygame.draw.rect(self.screen, WHITE,
                                  (25, 25, 150, 150))
         second = pygame.draw.rect(self.screen, WHITE,
