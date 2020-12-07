@@ -57,27 +57,26 @@ class GameVariables:
         self.is_game_end = False
         self.current_player_turn = "X"
 
-
-class DrawRectangle:
-    def __init__(self):
-        self.first = pygame.draw.rect(game_variable.screen, WHITE,
-                                      (25, 25, 150, 150))
-        self.second = pygame.draw.rect(game_variable.screen, WHITE,
-                                       (200, 25, 150, 150))
-        self.third = pygame.draw.rect(game_variable.screen, WHITE,
-                                      (375, 25, 150, 150))
-        self.fourth = pygame.draw.rect(game_variable.screen, WHITE,
-                                       (25, 200, 150, 150))
-        self.fifth = pygame.draw.rect(game_variable.screen, WHITE,
-                                      (200, 200, 150, 150))
-        self.sixth = pygame.draw.rect(game_variable.screen, WHITE,
-                                      (375, 200, 150, 150))
-        self.seventh = pygame.draw.rect(game_variable.screen, WHITE,
-                                        (25, 375, 150, 150))
-        self.eighth = pygame.draw.rect(game_variable.screen, WHITE,
-                                       (200, 375, 150, 150))
-        self.ninth = pygame.draw.rect(game_variable.screen, WHITE,
-                                      (375, 375, 150, 150))
+    def rects(self):
+        # Draw all the nine box for place x and o images
+        first = pygame.draw.rect(self.screen, WHITE,
+                                 (25, 25, 150, 150))
+        second = pygame.draw.rect(self.screen, WHITE,
+                                  (200, 25, 150, 150))
+        third = pygame.draw.rect(self.screen, WHITE,
+                                 (375, 25, 150, 150))
+        fourth = pygame.draw.rect(self.screen, WHITE,
+                                  (25, 200, 150, 150))
+        fifth = pygame.draw.rect(self.screen, WHITE,
+                                 (200, 200, 150, 150))
+        sixth = pygame.draw.rect(self.screen, WHITE,
+                                 (375, 200, 150, 150))
+        seventh = pygame.draw.rect(self.screen, WHITE,
+                                   (25, 375, 150, 150))
+        eighth = pygame.draw.rect(self.screen, WHITE,
+                                  (200, 375, 150, 150))
+        ninth = pygame.draw.rect(self.screen, WHITE,
+                                 (375, 375, 150, 150))
 
 
 class IsGameEnd:
@@ -259,19 +258,20 @@ def is_player_click(position, index_board, index_board_two, x_pos, o_pos):
                 ai.best_ai()
                 ai.flip_ai_player()
 
+
 def logic_handling():
     """All the logic handling happens here"""
     if game_variable.won:
         return
-    is_player_click(draw_rectangle.first, 0, 0, 50, 50)
-    is_player_click(draw_rectangle.second, 0, 1, 225, 50)
-    is_player_click(draw_rectangle.third, 0, 2, 400, 50)
-    is_player_click(draw_rectangle.fourth, 1, 0, 50, 225)
-    is_player_click(draw_rectangle.fifth, 1, 1, 225, 225)
-    is_player_click(draw_rectangle.sixth, 1, 2, 400, 225)
-    is_player_click(draw_rectangle.seventh, 2, 0, 50, 400)
-    is_player_click(draw_rectangle.eighth, 2, 1, 225, 400)
-    is_player_click(draw_rectangle.ninth, 2, 2, 400, 400)
+    is_player_click(game_variable.first, 0, 0, 50, 50)
+    is_player_click(game_variable.second, 0, 1, 225, 50)
+    is_player_click(game_variable.third, 0, 2, 400, 50)
+    is_player_click(game_variable.fourth, 1, 0, 50, 225)
+    is_player_click(game_variable.fifth, 1, 1, 225, 225)
+    is_player_click(game_variable.sixth, 1, 2, 400, 225)
+    is_player_click(game_variable.seventh, 2, 0, 50, 400)
+    is_player_click(game_variable.eighth, 2, 1, 225, 400)
+    is_player_click(game_variable.ninth, 2, 2, 400, 400)
 
 
 game_variable = GameVariables()
@@ -279,7 +279,6 @@ is_game_end = IsGameEnd()
 draw_score = DrawScore()
 draw_won_text = DrawWonText()
 ai = AI()
-draw_rectangle = DrawRectangle()
 
 while True:
     CLICK = pygame.mouse.get_pressed()
@@ -296,7 +295,7 @@ while True:
                 game_variable.is_game_end = False
                 game_variable.board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
                 game_variable.screen.fill((0, 0, 0))
-                DrawRectangle()
+                game_variable.rects()
                 ai.best_ai()
                 ai.flip_ai_player()
         if event.type == pygame.MOUSEBUTTONDOWN:
