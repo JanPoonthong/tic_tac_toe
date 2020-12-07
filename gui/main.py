@@ -81,7 +81,8 @@ class DrawRectangle:
 
 
 class IsGameEnd:
-    def check_win(self, number):
+    @staticmethod
+    def check_win(number):
         for row in game_variable.board:
             for tile in row:
                 if tile == number:
@@ -170,7 +171,7 @@ class DrawWonText:
 
 class AI:
     @staticmethod
-    def pickpick_random_ai():
+    def pick_random_ai():
         while game_variable.current_player_turn == "Computer":
             row = random.randint(0, 2)
             column = random.randint(0, 2)
