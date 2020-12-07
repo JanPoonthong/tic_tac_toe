@@ -170,7 +170,7 @@ class DrawWonText:
 
 class AI:
     @staticmethod
-    def ai():
+    def pickpick_random_ai():
         while game_variable.current_player_turn == "Computer":
             row = random.randint(0, 2)
             column = random.randint(0, 2)
@@ -226,7 +226,7 @@ class AI:
             game_variable.current_player_turn = "X"
 
         else:
-            ai.ai()
+            ai.pick_random_ai()
 
     @staticmethod
     def flip_ai_player():
@@ -238,7 +238,7 @@ class AI:
 
 class GameLogic:
     @staticmethod
-    def mode_ai():
+    def logic_handing():
         pos = pygame.mouse.get_pos()
 
         if game_variable.won is not True:
@@ -353,7 +353,7 @@ while True:
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             try:
-                game_logic.mode_ai()
+                game_logic.logic_handing()
             except NameError:
                 pass
 
