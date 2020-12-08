@@ -142,91 +142,84 @@ class GameVariables:
 
     def draw_menu(self):
         if not self.click:
-            menu_text = OVER_FONT.render("Hit  Space  Bar  To  Play", True, WHITE)
+            menu_text = OVER_FONT.render("Hit  Space  Bar  To  Play", True,
+                                         WHITE)
             self.screen.blit(menu_text, (15, 200))
         else:
             rectangles.rects(self.screen)
-            ai.pick_random_ai(self.won_x, self.current_player_turn, self.o_img, self.board, self.screen)
-            ai.best_ai(self.won_x, self.current_player_turn, self.o_img, self.board, self.screen)
+            if not self.won_x or self.won_o:
+                ai.pick_random_ai(self.current_player_turn, self.o_img,
+                                  self.board, self.screen)
+                ai.best_ai(self.board, self.screen, self.current_player_turn,
+                           self.o_img)
             rectangles.logic_handling(ai.is_player_click)
+            ai.flip_ai_player(self.current_player_turn)
+
 
 class AI:
-    def pick_random_ai(self, won_x, won_o, current_player_turn, o_img, board, screen):
+    def pick_random_ai(self, current_player_turn, o_img, board, screen):
         """AI pick on the random board after best_ai()"""
-        if not won_x or won_o:
-            while current_player_turn == "Computer":
-                row = random.randint(0, 2)
-                column = random.randint(0, 2)
-                x_pos = [50, 225, 400][column]
-                y_pos = [50, 225, 400][row]
-                if board[row][column] == 0:
-                    screen.blit(o_img,
-                                              (x_pos, y_pos))
-                    board[row][column] = 2
-                    current_player_turn = "X"
+        while current_player_turn == "Computer":
+            row = random.randint(0, 2)
+            column = random.randint(0, 2)
+            x_pos = [50, 225, 400][column]
+            y_pos = [50, 225, 400][row]
+            if board[row][column] == 0:
+                screen.blit(o_img, (x_pos, y_pos))
+                board[row][column] = 2
+                current_player_turn = "X"
 
-    def best_ai(self, won_x, won_o, board, screen, current_player_turn, o_img):
+    def best_ai(self, board, screen, current_player_turn, o_img):
         """Hardcode path for ai"""
-        if not won_x or won_o:
-            if board[1][1] == 0:
-                screen.blit(o_img, (225, 225))
-                board[1][1] = 2
-                current_player_turn = "X"
+        if board[1][1] == 0:
+            screen.blit(o_img, (225, 225))
+            board[1][1] = 2
+            current_player_turn = "X"
+        elif board[0][2] == 0:
+            screen.blit(o_img, (400, 50))
+            board[0][2] = 2
+            current_player_turn = "X"
+        elif board[0][1] == 1 and board[0][2] == 1 and board[0][0] == 0:
+            x_pos = [50, 225, 400][0]
+            y_pos = [50, 225, 400][0]
+            board[0][0] = 2
+            screen.blit(o_img, (x_pos, y_pos))
+            current_player_turn = "X"
+        elif board[1][1] == 1 and board[1][2] == 1 and board[0][1] == 0:
+            x_pos = [50, 225, 400][0]
+            y_pos = [50, 225, 400][1]
+            board[1][0] = 2
+            screen.blit(o_img, (x_pos, y_pos))
+            current_player_turn = "X"
+        elif board[2][1] == 1 and board[2][2] == 1 and board[2][0] == 0:
+            x_pos = [50, 225, 400][0]
+            y_pos = [50, 225, 400][2]
+            board[2][0] = 2
+            screen.blit(o_img, (x_pos, y_pos))
+            current_player_turn = "X"
+        elif board[0][0] == 1 and board[1][0] == 1 and board[2][0] == 0:
+            x_pos = [50, 225, 400][0]
+            y_pos = [50, 225, 400][2]
+            board[2][0] = 2
+            screen.blit(o_img, (x_pos, y_pos))
+            current_player_turn = "X"
+        else:
+            self.pick_random_ai(current_player_turn, o_img, board, screen)
 
-            elif board[0][2] == 0:
-                screen.blit(o_img, (400, 50))
-                board[0][2] = 2
-                current_player_turn = "X"
-
-            elif board[0][1] == 1 and board[0][
-                    2] == 1 and board[0][0] == 0:
-                x_pos = [50, 225, 400][0]
-                y_pos = [50, 225, 400][0]
-                board[0][0] = 2
-                screen.blit(o_img, (x_pos, y_pos))
-                current_player_turn = "X"
-
-            elif board[1][1] == 1 and board[1][
-                    2] == 1 and board[0][1] == 0:
-                x_pos = [50, 225, 400][0]
-                y_pos = [50, 225, 400][1]
-                board[1][0] = 2
-                screen.blit(o_img, (x_pos, y_pos))
-                current_player_turn = "X"
-
-            elif board[2][1] == 1 and board[2][
-                    2] == 1 and board[2][0] == 0:
-                x_pos = [50, 225, 400][0]
-                y_pos = [50, 225, 400][2]
-                board[2][0] = 2
-                screen.blit(o_img, (x_pos, y_pos))
-                current_player_turn = "X"
-
-            elif board[0][0] == 1 and board[1][
-                    0] == 1 and board[2][0] == 0:
-                x_pos = [50, 225, 400][0]
-                y_pos = [50, 225, 400][2]
-                board[2][0] = 2
-                screen.blit(o_img, (x_pos, y_pos))
-                current_player_turn = "X"
-
-            else:
-                self.pick_random_ai()
-
-    def flip_ai_player(current_player_turn):
+    def flip_ai_player(self, current_player_turn):
         """Change turns for player and computer"""
         if current_player_turn == "X":
             current_player_turn = "Computer"
         elif current_player_turn == "Computer":
             current_player_turn = "X"
 
-    def is_player_click(self, position, index_board, index_board_two, x_pos, o_pos):
-        """Check all the logic here, including mouse click, placeing images,
-        updaing the board"""
+    def is_player_click(self, position, index_board, index_board_two, x_pos,
+                        o_pos):
+        """Check all the logic here, including mouse click, placing images,
+        updating the board"""
         pos = pygame.mouse.get_pos()
         try:
-            if (position.collidepoint(pos) and self.board[index_board][
-                    index_board_two] == 0):
+            if position.collidepoint(pos) and self.board[index_board][index_board_two] == 0:
                 if self.current_player == "X":
                     self.screen.blit(self.x_img, (x_pos, o_pos))
                     self.board[index_board][index_board_two] = 1
@@ -253,24 +246,15 @@ class Rectangle:
         """Draw all the nine box for place x and o images"""
         width, height = 150, 150
         position = [25, 200, 375]
-        self.first = pygame.draw.rect(screen, WHITE,
-                                      (position[0], position[0], width, height))
-        self.second = pygame.draw.rect(screen, WHITE,
-                                       (position[1], position[0], width, height))
-        self.third = pygame.draw.rect(screen, WHITE,
-                                      (position[2], position[0], width, height))
-        self.fourth = pygame.draw.rect(screen, WHITE,
-                                       (position[0], position[1], width, height))
-        self.fifth = pygame.draw.rect(screen, WHITE,
-                                      (position[1], position[1], width, height))
-        self.sixth = pygame.draw.rect(screen, WHITE,
-                                      (position[2], position[1], width, height))
-        self.seventh = pygame.draw.rect(screen, WHITE,
-                                        (position[0], position[2], width, height))
-        self.eighth = pygame.draw.rect(screen, WHITE,
-                                       (position[1], position[2], width, height))
-        self.ninth = pygame.draw.rect(screen, WHITE,
-                                      (position[2], position[2], width, height))
+        self.first = pygame.draw.rect(screen, WHITE, (position[0], position[0], width, height))
+        self.second = pygame.draw.rect(screen, WHITE, (position[1], position[0], width, height))
+        self.third = pygame.draw.rect(screen, WHITE, (position[2], position[0], width, height))
+        self.fourth = pygame.draw.rect(screen, WHITE, (position[0], position[1], width, height))
+        self.fifth = pygame.draw.rect(screen, WHITE, (position[1], position[1], width, height))
+        self.sixth = pygame.draw.rect(screen, WHITE, (position[2], position[1], width, height))
+        self.seventh = pygame.draw.rect(screen, WHITE, (position[0], position[2], width, height))
+        self.eighth = pygame.draw.rect(screen, WHITE, (position[1], position[2], width, height))
+        self.ninth = pygame.draw.rect(screen, WHITE, (position[2], position[2], width, height))
 
     def logic_handling(self, is_click):
         """All the logic handling happens here"""
@@ -278,24 +262,16 @@ class Rectangle:
         box_pos = [0, 1, 2]
         if game_variable.won:
             return
-        is_click(self.first, box_pos[0], box_pos[0], position[0],
-                        position[0])
-        is_click(self.second, box_pos[0], box_pos[1], position[1],
-                        position[0])
-        is_click(self.third, box_pos[0], box_pos[2], position[2],
-                        position[0])
-        is_click(self.fourth, box_pos[1], box_pos[0], position[0],
-                        position[1])
-        is_click(self.fifth, box_pos[1], box_pos[1], position[1],
-                        position[1])
-        is_click(self.sixth, box_pos[1], box_pos[2], position[2],
-                        position[1])
-        is_click(self.seventh, box_pos[2], box_pos[0], position[0],
-                        position[2])
-        is_click(self.eighth, box_pos[2], box_pos[1], position[1],
-                        position[2])
-        is_click(self.ninth, box_pos[2], box_pos[2], position[2],
-                        position[2])
+        is_click(self.first, box_pos[0], box_pos[0], position[0], position[0])
+        is_click(self.second, box_pos[0], box_pos[1], position[1], position[0])
+        is_click(self.third, box_pos[0], box_pos[2], position[2], position[0])
+        is_click(self.fourth, box_pos[1], box_pos[0], position[0], position[1])
+        is_click(self.fifth, box_pos[1], box_pos[1], position[1], position[1])
+        is_click(self.sixth, box_pos[1], box_pos[2], position[2], position[1])
+        is_click(self.seventh, box_pos[2], box_pos[0], position[0], position[2])
+        is_click(self.eighth, box_pos[2], box_pos[1], position[1], position[2])
+        is_click(self.ninth, box_pos[2], box_pos[2], position[2], position[2])
+
 
 game_variable = GameVariables()
 rectangles = Rectangle()
@@ -339,8 +315,10 @@ while True:
                 game_variable.board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
                 game_variable.screen.fill((0, 0, 0))
                 rectangles.rects(game_variable.screen)
-                ai.best_ai()
-                ai.flip_ai_player()
+                ai.best_ai(game_variable.board, game_variable.screen,
+                           game_variable.current_player_turn,
+                           game_variable.o_img)
+                ai.flip_ai_player(game_variable.current_player_turn)
                 game_variable.score_x()
                 game_variable.score_o()
         game_variable.draw_menu()
