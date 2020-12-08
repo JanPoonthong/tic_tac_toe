@@ -57,64 +57,7 @@ class GameVariables:
         self.is_game_end = False
         self.current_player_turn = "X"
         self.click = False
-        # Rects
-        self.first = None
-        self.second = None
-        self.third = None
-        self.fourth = None
-        self.fifth = None
-        self.sixth = None
-        self.seventh = None
-        self.eighth = None
-        self.ninth = None
 
-    def rects(self):
-        """Draw all the nine box for place x and o images"""
-        width, height = 150, 150
-        position = [25, 200, 375]
-        self.first = pygame.draw.rect(self.screen, WHITE,
-                                      (position[0], position[0], width, height))
-        self.second = pygame.draw.rect(self.screen, WHITE,
-                                       (position[1], position[0], width, height))
-        self.third = pygame.draw.rect(self.screen, WHITE,
-                                      (position[2], position[0], width, height))
-        self.fourth = pygame.draw.rect(self.screen, WHITE,
-                                       (position[0], position[1], width, height))
-        self.fifth = pygame.draw.rect(self.screen, WHITE,
-                                      (position[1], position[1], width, height))
-        self.sixth = pygame.draw.rect(self.screen, WHITE,
-                                      (position[2], position[1], width, height))
-        self.seventh = pygame.draw.rect(self.screen, WHITE,
-                                        (position[0], position[2], width, height))
-        self.eighth = pygame.draw.rect(self.screen, WHITE,
-                                       (position[1], position[2], width, height))
-        self.ninth = pygame.draw.rect(self.screen, WHITE,
-                                      (position[2], position[2], width, height))
-
-    def logic_handling(self):
-        """All the logic handling happens here"""
-        position = [50, 225, 400]
-        box_pos = [0, 1, 2]
-        if game_variable.won:
-            return
-        self.is_player_click(self.first, box_pos[0], box_pos[0], position[0],
-                        position[0])
-        self.is_player_click(self.second, box_pos[0], box_pos[1], position[1],
-                        position[0])
-        self.is_player_click(self.third, box_pos[0], box_pos[2], position[2],
-                        position[0])
-        self.is_player_click(self.fourth, box_pos[1], box_pos[0], position[0],
-                        position[1])
-        self.is_player_click(self.fifth, box_pos[1], box_pos[1], position[1],
-                        position[1])
-        self.is_player_click(self.sixth, box_pos[1], box_pos[2], position[2],
-                        position[1])
-        self.is_player_click(self.seventh, box_pos[2], box_pos[0], position[0],
-                        position[2])
-        self.is_player_click(self.eighth, box_pos[2], box_pos[1], position[1],
-                        position[2])
-        self.is_player_click(self.ninth, box_pos[2], box_pos[2], position[2],
-                        position[2])
 
     def check_win(self, number):
         for row in self.board:
@@ -288,6 +231,65 @@ class GameVariables:
             menu_text = OVER_FONT.render("Hit  Space  Bar  To  Play", True, WHITE)
             self.screen.blit(menu_text, (15, 200))
 
+class Rectangle:
+    def __init__(self):
+        self.first = None
+        self.second = None
+        self.third = None
+        self.fourth = None
+        self.fifth = None
+        self.sixth = None
+        self.seventh = None
+        self.eighth = None
+        self.ninth = None
+
+    def rects(self):
+        """Draw all the nine box for place x and o images"""
+        width, height = 150, 150
+        position = [25, 200, 375]
+        self.first = pygame.draw.rect(self.screen, WHITE,
+                                      (position[0], position[0], width, height))
+        self.second = pygame.draw.rect(self.screen, WHITE,
+                                       (position[1], position[0], width, height))
+        self.third = pygame.draw.rect(self.screen, WHITE,
+                                      (position[2], position[0], width, height))
+        self.fourth = pygame.draw.rect(self.screen, WHITE,
+                                       (position[0], position[1], width, height))
+        self.fifth = pygame.draw.rect(self.screen, WHITE,
+                                      (position[1], position[1], width, height))
+        self.sixth = pygame.draw.rect(self.screen, WHITE,
+                                      (position[2], position[1], width, height))
+        self.seventh = pygame.draw.rect(self.screen, WHITE,
+                                        (position[0], position[2], width, height))
+        self.eighth = pygame.draw.rect(self.screen, WHITE,
+                                       (position[1], position[2], width, height))
+        self.ninth = pygame.draw.rect(self.screen, WHITE,
+                                      (position[2], position[2], width, height))
+
+    def logic_handling(self):
+        """All the logic handling happens here"""
+        position = [50, 225, 400]
+        box_pos = [0, 1, 2]
+        if game_variable.won:
+            return
+        self.is_player_click(self.first, box_pos[0], box_pos[0], position[0],
+                        position[0])
+        self.is_player_click(self.second, box_pos[0], box_pos[1], position[1],
+                        position[0])
+        self.is_player_click(self.third, box_pos[0], box_pos[2], position[2],
+                        position[0])
+        self.is_player_click(self.fourth, box_pos[1], box_pos[0], position[0],
+                        position[1])
+        self.is_player_click(self.fifth, box_pos[1], box_pos[1], position[1],
+                        position[1])
+        self.is_player_click(self.sixth, box_pos[1], box_pos[2], position[2],
+                        position[1])
+        self.is_player_click(self.seventh, box_pos[2], box_pos[0], position[0],
+                        position[2])
+        self.is_player_click(self.eighth, box_pos[2], box_pos[1], position[1],
+                        position[2])
+        self.is_player_click(self.ninth, box_pos[2], box_pos[2], position[2],
+                        position[2])
 
 game_variable = GameVariables()
 
