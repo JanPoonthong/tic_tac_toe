@@ -231,6 +231,8 @@ class GameVariables:
             menu_text = OVER_FONT.render("Hit  Space  Bar  To  Play", True, WHITE)
             self.screen.blit(menu_text, (15, 200))
 
+    rectangles.rects(self, self.screen)
+
 class Rectangle:
     def __init__(self):
         self.first = None
@@ -243,27 +245,27 @@ class Rectangle:
         self.eighth = None
         self.ninth = None
 
-    def rects(self):
+    def rects(self, screen):
         """Draw all the nine box for place x and o images"""
         width, height = 150, 150
         position = [25, 200, 375]
-        self.first = pygame.draw.rect(self.screen, WHITE,
+        self.first = pygame.draw.rect(screen, WHITE,
                                       (position[0], position[0], width, height))
-        self.second = pygame.draw.rect(self.screen, WHITE,
+        self.second = pygame.draw.rect(screen, WHITE,
                                        (position[1], position[0], width, height))
-        self.third = pygame.draw.rect(self.screen, WHITE,
+        self.third = pygame.draw.rect(screen, WHITE,
                                       (position[2], position[0], width, height))
-        self.fourth = pygame.draw.rect(self.screen, WHITE,
+        self.fourth = pygame.draw.rect(screen, WHITE,
                                        (position[0], position[1], width, height))
-        self.fifth = pygame.draw.rect(self.screen, WHITE,
+        self.fifth = pygame.draw.rect(screen, WHITE,
                                       (position[1], position[1], width, height))
-        self.sixth = pygame.draw.rect(self.screen, WHITE,
+        self.sixth = pygame.draw.rect(screen, WHITE,
                                       (position[2], position[1], width, height))
-        self.seventh = pygame.draw.rect(self.screen, WHITE,
+        self.seventh = pygame.draw.rect(screen, WHITE,
                                         (position[0], position[2], width, height))
-        self.eighth = pygame.draw.rect(self.screen, WHITE,
+        self.eighth = pygame.draw.rect(screen, WHITE,
                                        (position[1], position[2], width, height))
-        self.ninth = pygame.draw.rect(self.screen, WHITE,
+        self.ninth = pygame.draw.rect(screen, WHITE,
                                       (position[2], position[2], width, height))
 
     def logic_handling(self):
@@ -292,6 +294,7 @@ class Rectangle:
                         position[2])
 
 game_variable = GameVariables()
+rectangles = Rectangle()
 
 while True:
     game_variable.clock.tick(game_variable.fps)
