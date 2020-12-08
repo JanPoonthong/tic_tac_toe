@@ -70,38 +70,55 @@ class GameVariables:
 
     def rects(self):
         """Draw all the nine box for place x and o images"""
+        width, height = 150, 150
+        position = [25, 200, 375]
         self.first = pygame.draw.rect(self.screen, WHITE,
-                                      (25, 25, 150, 150))
+                                      (position[0], position[0], width, height))
         self.second = pygame.draw.rect(self.screen, WHITE,
-                                       (200, 25, 150, 150))
+                                       (position[1], position[0], width,
+                                        height))
         self.third = pygame.draw.rect(self.screen, WHITE,
-                                      (375, 25, 150, 150))
+                                      (position[2], position[0], width, height))
         self.fourth = pygame.draw.rect(self.screen, WHITE,
-                                       (25, 200, 150, 150))
+                                       (position[0], position[1], width,
+                                        height))
         self.fifth = pygame.draw.rect(self.screen, WHITE,
-                                      (200, 200, 150, 150))
+                                      (position[1], position[1], width, height))
         self.sixth = pygame.draw.rect(self.screen, WHITE,
-                                      (375, 200, 150, 150))
+                                      (position[2], position[1], width, height))
         self.seventh = pygame.draw.rect(self.screen, WHITE,
-                                        (25, 375, 150, 150))
+                                        (position[0], position[2], width,
+                                         height))
         self.eighth = pygame.draw.rect(self.screen, WHITE,
-                                       (200, 375, 150, 150))
+                                       (position[1], position[2], width,
+                                        height))
         self.ninth = pygame.draw.rect(self.screen, WHITE,
-                                      (375, 375, 150, 150))
+                                      (position[2], position[2], width, height))
 
     def logic_handling(self):
         """All the logic handling happens here"""
+        position = [50, 225, 400]
+        box_pos = [0, 1, 2]
         if game_variable.won:
             return
-        is_player_click(self.first, 0, 0, 50, 50)
-        is_player_click(self.second, 0, 1, 225, 50)
-        is_player_click(self.third, 0, 2, 400, 50)
-        is_player_click(self.fourth, 1, 0, 50, 225)
-        is_player_click(self.fifth, 1, 1, 225, 225)
-        is_player_click(self.sixth, 1, 2, 400, 225)
-        is_player_click(self.seventh, 2, 0, 50, 400)
-        is_player_click(self.eighth, 2, 1, 225, 400)
-        is_player_click(self.ninth, 2, 2, 400, 400)
+        is_player_click(self.first, box_pos[0], box_pos[0], position[0],
+                        position[0])
+        is_player_click(self.second, box_pos[0], box_pos[1], position[1],
+                        position[0])
+        is_player_click(self.third, box_pos[0], box_pos[2], position[2],
+                        position[0])
+        is_player_click(self.fourth, box_pos[1], box_pos[0], position[0],
+                        position[1])
+        is_player_click(self.fifth, box_pos[1], box_pos[1], position[1],
+                        position[1])
+        is_player_click(self.sixth, box_pos[1], box_pos[2], position[2],
+                        position[1])
+        is_player_click(self.seventh, box_pos[2], box_pos[0], position[0],
+                        position[2])
+        is_player_click(self.eighth, box_pos[2], box_pos[1], position[1],
+                        position[2])
+        is_player_click(self.ninth, box_pos[2], box_pos[2], position[2],
+                        position[2])
 
 
 class IsGameEnd:
@@ -210,7 +227,8 @@ class AI:
                 x_pos = [50, 225, 400][column]
                 y_pos = [50, 225, 400][row]
                 if game_variable.board[row][column] == 0:
-                    game_variable.screen.blit(game_variable.o_img, (x_pos, y_pos))
+                    game_variable.screen.blit(game_variable.o_img,
+                                              (x_pos, y_pos))
                     game_variable.board[row][column] = 2
                     game_variable.current_player_turn = "X"
 
