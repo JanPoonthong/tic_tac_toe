@@ -21,8 +21,7 @@ PINK = (255, 0, 255)
 LIGHT_BLUE = (108, 176, 243)
 
 # Font
-ARCADECLASSIC = os.path.join(project_directory,
-                             "font/arcadeclassic.regular.ttf")
+ARCADECLASSIC = os.path.join(project_directory,"font/arcadeclassic.regular.ttf")
 FONT = pygame.font.Font(ARCADECLASSIC, 32)
 OVER_FONT = pygame.font.Font(ARCADECLASSIC, 50)
 
@@ -36,15 +35,11 @@ class GameVariables:
         self.clock = pygame.time.Clock()
         self.fps = 60
         # Images
-        self.x_img = pygame.image.load(
-            os.path.join(project_directory, "img/x.png"))
-        self.o_img = pygame.image.load(
-            os.path.join(project_directory, "img/o.png"))
+        self.x_img = pygame.image.load(os.path.join(project_directory, "img/x.png"))
+        self.o_img = pygame.image.load(os.path.join(project_directory, "img/o.png"))
         self.w_rezise, self.h_rezise = 110, 110
-        self.x_img = pygame.transform.scale(self.x_img,
-                                            (self.w_rezise, self.h_rezise))
-        self.o_img = pygame.transform.scale(self.o_img,
-                                            (self.w_rezise, self.h_rezise))
+        self.x_img = pygame.transform.scale(self.x_img, (self.w_rezise, self.h_rezise))
+        self.o_img = pygame.transform.scale(self.o_img, (self.w_rezise, self.h_rezise))
         # Game state
         self.current_player = "X"
         self.board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
@@ -97,34 +92,17 @@ class GameVariables:
             self.won_o = True
 
     def is_board_fill(self):
-        return self.board[0][0] != 0 and self.board[0][
-            1] != 0 and \
-               self.board[0][2] != 0 and self.board[1][
-                   0] != 0 and \
-               self.board[1][1] != 0 and self.board[1][
-                   2] != 0 and \
-               self.board[2][0] != 0 and self.board[2][
-                   1] != 0 and \
+        return self.board[0][0] != 0 and self.board[0][1] != 0 and \
+               self.board[0][2] != 0 and self.board[1][0] != 0 and \
+               self.board[1][1] != 0 and self.board[1][2] != 0 and \
+               self.board[2][0] != 0 and self.board[2][1] != 0 and \
                self.board[2][2] != 0
-
-    def score_x(self):
-        """Draw the score for X"""
-        score_value = FONT.render("X  " + str(self.x_score), True,
-                                  WHITE)
-        self.screen.blit(score_value, (50, 550))
-
-    def score_o(self):
-        """Draw the score for O"""
-        score_value = FONT.render("O  " + str(self.o_score), True,
-                                  WHITE)
-        self.screen.blit(score_value, (50, 600))
 
     def draw_text_won(self):
         """When someone won, this function will run"""
         if self.won_x:
             over_text = OVER_FONT.render("X won", True, LIGHT_BLUE)
-            space_text = OVER_FONT.render("Space bar for clear", True,
-                                          LIGHT_BLUE)
+            space_text = OVER_FONT.render("Space bar for clear", True, LIGHT_BLUE)
             self.screen.blit(over_text, (220, 200))
             self.screen.blit(space_text, (50, 300))
         elif self.won_o:
@@ -142,18 +120,29 @@ class GameVariables:
 
     def draw_menu(self):
         if not self.click:
-            menu_text = OVER_FONT.render("Hit  Space  Bar  To  Play", True,
-                                         WHITE)
+            menu_text = OVER_FONT.render("Hit  Space  Bar  To  Play", True, WHITE)
             self.screen.blit(menu_text, (15, 200))
         else:
             rectangles.rects(self.screen)
             if not self.won_x or self.won_o:
-                ai.pick_random_ai(self.current_player_turn, self.o_img,
-                                  self.board, self.screen)
-                ai.best_ai(self.board, self.screen, self.current_player_turn,
-                           self.o_img)
+                ai.pick_random_ai(self.current_player_turn, self.o_img, self.board, self.screen)
+                ai.best_ai(self.board, self.screen, self.current_player_turn, self.o_img)
             rectangles.logic_handling(ai.is_player_click)
             ai.flip_ai_player(self.current_player_turn)
+            score.score_x(self.x_score, self.screen)
+            score.score_o(self.o_score, self.screen)
+
+
+class Score:
+    def score_x(self, x_score, screen):
+        """Draw the score for X"""
+        score_value = FONT.render("X  " + str(x_score), True, WHITE)
+        screen.blit(score_value, (50, 550))
+
+    def score_o(self, o_score, screen):
+        """Draw the score for O"""
+        score_value = FONT.render("O  " + str(o_score), True, WHITE)
+        screen.blit(score_value, (50, 600))
 
 
 class AI:
@@ -213,8 +202,7 @@ class AI:
         elif current_player_turn == "Computer":
             current_player_turn = "X"
 
-    def is_player_click(self, board, x_img, current_player, screen, position, index_board, index_board_two, x_pos,
-                        o_pos):
+    def is_player_click(self, position, index_board, index_board_two, x_pos, o_pos, board, x_img, current_player, screen):
         """Check all the logic here, including mouse click, placing images,
         updating the board"""
         pos = pygame.mouse.get_pos()
@@ -223,8 +211,8 @@ class AI:
                 screen.blit(x_img, (x_pos, o_pos))
                 board[index_board][index_board_two] = 1
                 if not game_variable.is_board_fill():
-                    game_variable.best_ai()
-                    game_variable.flip_ai_player()
+                    self.best_ai(game_variable.board, game_variable.screen, game_variable.current_player_turn, game_variable.o_img)
+                    self.flip_ai_player(game_variable.current_player_turn)
 
 
 class Rectangle:
@@ -259,20 +247,21 @@ class Rectangle:
         box_pos = [0, 1, 2]
         if game_variable.won:
             return
-        is_click(game_variable.board, game_variable.x_img, game_variable.current_player, game_variable.screen, self.first, box_pos[0], box_pos[0], position[0], position[0])
-        is_click(game_variable.board, game_variable.x_img, game_variable.current_player, game_variable.screen, self.second, box_pos[0], box_pos[1], position[1], position[0])
-        is_click(game_variable.board, game_variable.x_img, game_variable.current_player, game_variable.screen, self.third, box_pos[0], box_pos[2], position[2], position[0])
-        is_click(game_variable.board, game_variable.x_img, game_variable.current_player, game_variable.screen, self.fourth, box_pos[1], box_pos[0], position[0], position[1])
-        is_click(game_variable.board, game_variable.x_img, game_variable.current_player, game_variable.screen, self.fifth, box_pos[1], box_pos[1], position[1], position[1])
-        is_click(game_variable.board, game_variable.x_img, game_variable.current_player, game_variable.screen, self.sixth, box_pos[1], box_pos[2], position[2], position[1])
-        is_click(game_variable.board, game_variable.x_img, game_variable.current_player, game_variable.screen, self.seventh, box_pos[2], box_pos[0], position[0], position[2])
-        is_click(game_variable.board, game_variable.x_img, game_variable.current_player, game_variable.screen, self.eighth, box_pos[2], box_pos[1], position[1], position[2])
-        is_click(game_variable.board, game_variable.x_img, game_variable.current_player, game_variable.screen, self.ninth, box_pos[2], box_pos[2], position[2], position[2])
+        is_click(self.first, box_pos[0], box_pos[0], position[0], position[0], game_variable.board, game_variable.x_img, game_variable.current_player, game_variable.screen)
+        is_click(self.second, box_pos[0], box_pos[1], position[1], position[0], game_variable.board, game_variable.x_img, game_variable.current_player, game_variable.screen)
+        is_click(self.third, box_pos[0], box_pos[2], position[2], position[0], game_variable.board, game_variable.x_img, game_variable.current_player, game_variable.screen)
+        is_click(self.fourth, box_pos[1], box_pos[0], position[0], position[1], game_variable.board, game_variable.x_img, game_variable.current_player, game_variable.screen)
+        is_click(self.fifth, box_pos[1], box_pos[1], position[1], position[1], game_variable.board, game_variable.x_img, game_variable.current_player, game_variable.screen)
+        is_click(self.sixth, box_pos[1], box_pos[2], position[2], position[1], game_variable.board, game_variable.x_img, game_variable.current_player, game_variable.screen)
+        is_click(self.seventh, box_pos[2], box_pos[0], position[0], position[2], game_variable.board, game_variable.x_img, game_variable.current_player, game_variable.screen)
+        is_click(self.eighth, box_pos[2], box_pos[1], position[1], position[2], game_variable.board, game_variable.x_img, game_variable.current_player, game_variable.screen)
+        is_click(self.ninth, box_pos[2], box_pos[2], position[2], position[2], game_variable.board, game_variable.x_img, game_variable.current_player, game_variable.screen)
 
 
 game_variable = GameVariables()
 rectangles = Rectangle()
 ai = AI()
+score = Score()
 
 while True:
     game_variable.clock.tick(game_variable.fps)
@@ -286,8 +275,7 @@ while True:
             game_variable.num()
             game_variable.draw_text_won()
 
-            if (game_variable.won_x is False and game_variable.won_o is
-                    False and game_variable.is_board_fill()):
+            if game_variable.won_x is False and game_variable.won_o is False and game_variable.is_board_fill():
                 game_variable.tie()
             if game_variable.is_game_end is False:
                 if game_variable.check_win(1):
@@ -309,11 +297,9 @@ while True:
                 game_variable.board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
                 game_variable.screen.fill((0, 0, 0))
                 rectangles.rects(game_variable.screen)
-                ai.best_ai(game_variable.board, game_variable.screen,
-                           game_variable.current_player_turn,
-                           game_variable.o_img)
+                ai.best_ai(game_variable.board, game_variable.screen, game_variable.current_player_turn, game_variable.o_img)
                 ai.flip_ai_player(game_variable.current_player_turn)
-                game_variable.score_x()
-                game_variable.score_o()
+                score.score_x(game_variable.x_score, game_variable.screen)
+                score.score_o(game_variable.o_score, game_variable.screen)
         game_variable.draw_menu()
     pygame.display.update()
