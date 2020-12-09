@@ -91,10 +91,10 @@ class GameVariables:
     def is_board_fill(self):
         """Check board is fill so that program know game is tie"""
         return self.board[0][0] != 0 and self.board[0][1] != 0 and \
-               self.board[0][2] != 0 and self.board[1][0] != 0 and \
-               self.board[1][1] != 0 and self.board[1][2] != 0 and \
-               self.board[2][0] != 0 and self.board[2][1] != 0 and \
-               self.board[2][2] != 0
+            self.board[0][2] != 0 and self.board[1][0] != 0 and \
+            self.board[1][1] != 0 and self.board[1][2] != 0 and \
+            self.board[2][0] != 0 and self.board[2][1] != 0 and \
+            self.board[2][2] != 0
 
     def draw_text_won(self):
         """When someone won, this function will run"""
