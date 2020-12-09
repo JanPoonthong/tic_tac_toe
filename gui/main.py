@@ -21,7 +21,7 @@ PINK = (255, 0, 255)
 LIGHT_BLUE = (108, 176, 243)
 
 # Font
-ARCADECLASSIC = os.path.join(project_directory,"font/arcadeclassic.regular.ttf")
+ARCADECLASSIC = os.path.join(project_directory, "font/arcadeclassic.regular.ttf")
 FONT = pygame.font.Font(ARCADECLASSIC, 32)
 OVER_FONT = pygame.font.Font(ARCADECLASSIC, 50)
 
@@ -51,7 +51,6 @@ class GameVariables:
         self.is_click = "not click"
         self.is_game_end = False
         self.current_player_turn = "X"
-        self.click = False
 
     def check_win(self, number):
         for row in self.board:
@@ -117,20 +116,6 @@ class GameVariables:
         space_text = OVER_FONT.render("Space bar for clear", True, DARK_BLUE)
         self.screen.blit(tie_text, (220, 200))
         self.screen.blit(space_text, (50, 300))
-
-    def draw_menu(self):
-        if not self.click:
-            menu_text = OVER_FONT.render("Hit  Space  Bar  To  Play", True, WHITE)
-            self.screen.blit(menu_text, (15, 200))
-        else:
-            rectangles.rects(self.screen)
-            if not self.won_x or self.won_o:
-                ai.pick_random_ai(self.current_player_turn, self.o_img, self.board, self.screen)
-                ai.best_ai(self.board, self.screen, self.current_player_turn, self.o_img)
-            rectangles.logic_handling(ai.is_player_click)
-            ai.flip_ai_player(self.current_player_turn)
-            score.score_x(self.x_score, self.screen)
-            score.score_o(self.o_score, self.screen)
 
 
 class Score:
@@ -262,6 +247,8 @@ game_variable = GameVariables()
 rectangles = Rectangle()
 ai = AI()
 score = Score()
+rectangles.rects(game_variable.screen)
+
 
 while True:
     game_variable.clock.tick(game_variable.fps)
@@ -270,9 +257,15 @@ while True:
         if event.type == pygame.QUIT:
             sys.exit()
         if event.type == pygame.MOUSEBUTTONDOWN:
-            rectangles.logic_handling(ai.is_player_click)
-            game_variable.check_win(game_variable.num)
-            game_variable.num()
+            if not game_variable.won_x or game_variable.won_o:
+                ai.pick_random_ai(game_variable.current_player_turn, game_variable.o_img, game_variable.board, game_variable.screen)
+                ai.best_ai(game_variable.board, game_variable.screen, game_variable.current_player_turn, game_variable.o_img)
+                rectangles.logic_handling(ai.is_player_click)
+                ai.flip_ai_player(game_variable.current_player_turn)
+                score.score_x(game_variable.x_score, game_variable.screen)
+                score.score_o(game_variable.o_score, game_variable.screen)
+                game_variable.check_win(game_variable.num)
+                game_variable.num()
             game_variable.draw_text_won()
 
             if game_variable.won_x is False and game_variable.won_o is False and game_variable.is_board_fill():
@@ -301,5 +294,4 @@ while True:
                 ai.flip_ai_player(game_variable.current_player_turn)
                 score.score_x(game_variable.x_score, game_variable.screen)
                 score.score_o(game_variable.o_score, game_variable.screen)
-        game_variable.draw_menu()
     pygame.display.update()
