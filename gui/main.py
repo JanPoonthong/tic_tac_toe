@@ -50,9 +50,20 @@ class GameVariables:
         self.is_game_end = False
         self.current_player_turn = "X"
 
-    def check_win(self, number):
+    def num(self):
+        """Check if player = 1 win or computer = 2"""
+        if is_end.check_win(1, self.board):
+            self.won_x = True
+        elif is_end.check_win(2, self.board):
+            self.won_o = True
+        draw_score.draw_text_won(self.won_x, self.screen, self.won_o)
+
+
+class IsGameEnd:
+    @staticmethod
+    def check_win(number, board):
         """Check all the win on the board"""
-        for row in self.board:
+        for row in board:
             for tile in row:
                 if tile == number:
                     continue
@@ -60,59 +71,57 @@ class GameVariables:
             else:
                 return True
         for column in range(3):
-            for row in self.board:
+            for row in board:
                 if row[column] == number:
                     continue
                 break
             else:
                 return True
         for tile in range(3):
-            if self.board[tile][tile] == number:
+            if board[tile][tile] == number:
                 continue
             break
         else:
             return True
         for tile in range(3):
-            if self.board[tile][2 - tile] == number:
+            if board[tile][2 - tile] == number:
                 continue
             break
         else:
             return True
 
-    def num(self):
-        """Check if player = 1 win or computer = 2"""
-        if self.check_win(1):
-            self.won_x = True
-        elif self.check_win(2):
-            self.won_o = True
-
-    def is_board_fill(self):
+    @staticmethod
+    def is_board_fill(board):
         """Check board is fill so that program know game is tie"""
-        return self.board[0][0] != 0 and self.board[0][1] != 0 and \
-            self.board[0][2] != 0 and self.board[1][0] != 0 and \
-            self.board[1][1] != 0 and self.board[1][2] != 0 and \
-            self.board[2][0] != 0 and self.board[2][1] != 0 and \
-            self.board[2][2] != 0
+        return board[0][0] != 0 and board[0][1] != 0 and \
+            board[0][2] != 0 and board[1][0] != 0 and \
+            board[1][1] != 0 and board[1][2] != 0 and \
+            board[2][0] != 0 and board[2][1] != 0 and \
+            board[2][2] != 0
 
-    def draw_text_won(self):
+
+class DrawScore:
+    @staticmethod
+    def draw_text_won(won_x, screen, won_o):
         """When someone won, this function will run"""
-        if self.won_x:
+        if won_x:
             over_text = OVER_FONT.render("X won", True, LIGHT_BLUE)
             space_text = OVER_FONT.render("Space bar for clear", True, LIGHT_BLUE)
-            self.screen.blit(over_text, (220, 200))
-            self.screen.blit(space_text, (50, 300))
-        elif self.won_o:
+            screen.blit(over_text, (220, 200))
+            screen.blit(space_text, (50, 300))
+        elif won_o:
             over_text = OVER_FONT.render("Computer won", True, PINK)
             space_text = OVER_FONT.render("Space bar for clear", True, PINK)
-            self.screen.blit(over_text, (140, 200))
-            self.screen.blit(space_text, (50, 300))
+            screen.blit(over_text, (140, 200))
+            screen.blit(space_text, (50, 300))
 
-    def tie(self):
+    @staticmethod
+    def tie(screen):
         """When game tie, this function will run"""
         tie_text = OVER_FONT.render("Tie", True, DARK_BLUE)
         space_text = OVER_FONT.render("Space bar for clear", True, DARK_BLUE)
-        self.screen.blit(tie_text, (220, 200))
-        self.screen.blit(space_text, (50, 300))
+        screen.blit(tie_text, (220, 200))
+        screen.blit(space_text, (50, 300))
 
 
 class Score:
@@ -198,7 +207,7 @@ class AI:
             if current_player == "X":
                 screen.blit(x_img, (x_pos, o_pos))
                 board[index_board][index_board_two] = 1
-                if not game_variable.is_board_fill():
+                if not is_end.is_board_fill(game_variable.board):
                     self.best_ai(game_variable.board, game_variable.screen,
                                  game_variable.o_img)
                     self.flip_ai_player()
@@ -278,6 +287,8 @@ game_variable = GameVariables()
 rectangles = Rectangle()
 ai = AI()
 score = Score()
+draw_score = DrawScore()
+is_end = IsGameEnd()
 rectangles.rects(game_variable.screen)
 
 if __name__ == '__main__':
@@ -292,17 +303,16 @@ if __name__ == '__main__':
                     score.score_x(game_variable.x_score, game_variable.screen)
                     score.score_o(game_variable.o_score, game_variable.screen)
                     game_variable.num()
-                    game_variable.draw_text_won()
                 # Check if tie
                 if (game_variable.won_x is False and game_variable.won_o is False
-                        and game_variable.is_board_fill()):
-                    game_variable.tie()
+                        and is_end.is_board_fill(game_variable.board)):
+                    draw_score.tie(game_variable.screen)
                 if game_variable.is_game_end is False:
-                    if game_variable.check_win(1):
+                    if is_end.check_win(1, game_variable.board):
                         game_variable.is_game_end = True
                         game_variable.won = True
                         game_variable.x_score += 1
-                    if game_variable.check_win(2):
+                    if is_end.check_win(2, game_variable.board):
                         game_variable.is_game_end = True
                         game_variable.won = True
                         game_variable.o_score += 1
