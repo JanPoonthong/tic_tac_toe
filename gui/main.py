@@ -137,7 +137,6 @@ class AI:
         self.o_img = pygame.transform.scale(self.o_img, (self.w_resize, self.h_resize))
         self.current_player = "X"
 
-
     def pick_random_ai(self, board, screen):
         """AI pick on the random board after best_ai()"""
         while self.current_player_turn == "Computer":
@@ -269,15 +268,15 @@ class Rectangle:
                  game_variable.board, game_variable.screen)
 
 
-game_variable = GameVariables()
-rectangles = Rectangle()
-ai = AI()
-score = Score()
-draw_score = DrawScore()
-is_end = IsGameEnd()
-rectangles.rects(game_variable.screen)
+def main():
+    game_variable = GameVariables()
+    rectangles = Rectangle()
+    ai = AI()
+    score = Score()
+    draw_score = DrawScore()
+    is_end = IsGameEnd()
 
-if __name__ == '__main__':
+    rectangles.rects(game_variable.screen)
     while True:
         CLOCK.tick(FPS)
         for event in pygame.event.get():
@@ -289,7 +288,6 @@ if __name__ == '__main__':
                     score.score_x(game_variable.screen)
                     score.score_o(game_variable.screen)
                     game_variable.num()
-                # Check if tie
                 if (game_variable.won_x is False and game_variable.won_o is False
                         and is_end.is_board_fill(game_variable.board)):
                     draw_score.tie(game_variable.screen)
@@ -314,3 +312,7 @@ if __name__ == '__main__':
                     score.score_x(game_variable.screen)
                     score.score_o(game_variable.screen)
         pygame.display.update()
+
+
+if __name__ == '__main__':
+    main()
