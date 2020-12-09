@@ -134,9 +134,9 @@ class Score:
 
 class AI:
     @staticmethod
-    def pick_random_ai(current_player_turn, o_img, board, screen):
+    def pick_random_ai(o_img, board, screen):
         """AI pick on the random board after best_ai()"""
-        while current_player_turn == "Computer":
+        while game_variable.current_player_turn == "Computer":
             row = random.randint(0, 2)
             column = random.randint(0, 2)
             x_pos = [50, 225, 400][column]
@@ -144,7 +144,7 @@ class AI:
             if board[row][column] == 0:
                 screen.blit(o_img, (x_pos, y_pos))
                 board[row][column] = 2
-                current_player_turn = "X"
+                game_variable.current_player_turn = "X"
 
     def best_ai(self, board, screen, o_img):
         """Hardcode path for ai"""
@@ -181,8 +181,7 @@ class AI:
             screen.blit(o_img, (x_pos, y_pos))
             game_variable.current_player_turn = "X"
         else:
-            self.pick_random_ai(game_variable.current_player_turn,
-                                game_variable.o_img, game_variable.board,
+            self.pick_random_ai(game_variable.o_img, game_variable.board,
                                 game_variable.screen)
 
     @staticmethod
