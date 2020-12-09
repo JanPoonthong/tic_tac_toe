@@ -11,7 +11,6 @@ project_directory = os.path.dirname(__file__)
 ICON = pygame.image.load(os.path.join(project_directory, "img/icon.png"))
 pygame.display.set_icon(ICON)
 
-# Colors
 WHITE = (255, 255, 255)
 GREY = (72, 72, 72)
 BRIGHT_GREY = (60, 60, 90)
@@ -20,7 +19,6 @@ DARK_BLUE = (9, 109, 209)
 PINK = (255, 0, 255)
 LIGHT_BLUE = (108, 176, 243)
 
-# Font
 ARCADECLASSIC = os.path.join(project_directory, "font/font.regular.ttf")
 FONT = pygame.font.Font(ARCADECLASSIC, 32)
 OVER_FONT = pygame.font.Font(ARCADECLASSIC, 50)
