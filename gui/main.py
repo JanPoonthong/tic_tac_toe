@@ -258,7 +258,6 @@ while True:
             sys.exit()
         if event.type == pygame.MOUSEBUTTONDOWN:
             if not game_variable.won_x or game_variable.won_o:
-                ai.best_ai(game_variable.board, game_variable.screen, game_variable.current_player_turn, game_variable.o_img)
                 rectangles.logic_handling(ai.is_player_click)
                 score.score_x(game_variable.x_score, game_variable.screen)
                 score.score_o(game_variable.o_score, game_variable.screen)
