@@ -53,6 +53,7 @@ class GameVariables:
         self.current_player_turn = "X"
 
     def check_win(self, number):
+        """Check all the win on the board"""
         for row in self.board:
             for tile in row:
                 if tile == number:
@@ -60,7 +61,6 @@ class GameVariables:
                 break
             else:
                 return True
-
         for column in range(3):
             for row in self.board:
                 if row[column] == number:
@@ -68,14 +68,12 @@ class GameVariables:
                 break
             else:
                 return True
-
         for tile in range(3):
             if self.board[tile][tile] == number:
                 continue
             break
         else:
             return True
-
         for tile in range(3):
             if self.board[tile][2 - tile] == number:
                 continue
@@ -91,6 +89,7 @@ class GameVariables:
             self.won_o = True
 
     def is_board_fill(self):
+        """Check board is fill so that program know game is tie"""
         return self.board[0][0] != 0 and self.board[0][1] != 0 and \
                self.board[0][2] != 0 and self.board[1][0] != 0 and \
                self.board[1][1] != 0 and self.board[1][2] != 0 and \
@@ -283,42 +282,41 @@ ai = AI()
 score = Score()
 rectangles.rects(game_variable.screen)
 
-while True:
-    game_variable.clock.tick(game_variable.fps)
-
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            sys.exit()
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if not game_variable.won_x or game_variable.won_o:
-                rectangles.logic_handling(ai.is_player_click)
-                score.score_x(game_variable.x_score, game_variable.screen)
-                score.score_o(game_variable.o_score, game_variable.screen)
-                game_variable.num()
-                game_variable.draw_text_won()
-
-            if (game_variable.won_x is False and game_variable.won_o is False
-                    and game_variable.is_board_fill()):
-                game_variable.tie()
-            if game_variable.is_game_end is False:
-                if game_variable.check_win(1):
-                    game_variable.is_game_end = True
-                    game_variable.won = True
-                    game_variable.x_score += 1
-                if game_variable.check_win(2):
-                    game_variable.is_game_end = True
-                    game_variable.won = True
-                    game_variable.o_score += 1
-
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:
-                game_variable.won_x = False
-                game_variable.won_o = False
-                game_variable.won = False
-                game_variable.is_game_end = False
-                game_variable.board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
-                game_variable.screen.fill((0, 0, 0))
-                rectangles.rects(game_variable.screen)
-                score.score_x(game_variable.x_score, game_variable.screen)
-                score.score_o(game_variable.o_score, game_variable.screen)
-    pygame.display.update()
+if __name__ == '__main__':
+    while True:
+        game_variable.clock.tick(game_variable.fps)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if not game_variable.won_x or game_variable.won_o:
+                    rectangles.logic_handling(ai.is_player_click)
+                    score.score_x(game_variable.x_score, game_variable.screen)
+                    score.score_o(game_variable.o_score, game_variable.screen)
+                    game_variable.num()
+                    game_variable.draw_text_won()
+                # Check if tie
+                if (game_variable.won_x is False and game_variable.won_o is False
+                        and game_variable.is_board_fill()):
+                    game_variable.tie()
+                if game_variable.is_game_end is False:
+                    if game_variable.check_win(1):
+                        game_variable.is_game_end = True
+                        game_variable.won = True
+                        game_variable.x_score += 1
+                    if game_variable.check_win(2):
+                        game_variable.is_game_end = True
+                        game_variable.won = True
+                        game_variable.o_score += 1
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    game_variable.won_x = False
+                    game_variable.won_o = False
+                    game_variable.won = False
+                    game_variable.is_game_end = False
+                    game_variable.board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+                    game_variable.screen.fill((0, 0, 0))
+                    rectangles.rects(game_variable.screen)
+                    score.score_x(game_variable.x_score, game_variable.screen)
+                    score.score_o(game_variable.o_score, game_variable.screen)
+        pygame.display.update()
