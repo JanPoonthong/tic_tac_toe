@@ -37,9 +37,9 @@ class GameVariables:
         # Images
         self.x_img = pygame.image.load(os.path.join(project_directory, "img/x.png"))
         self.o_img = pygame.image.load(os.path.join(project_directory, "img/o.png"))
-        self.w_rezise, self.h_rezise = 110, 110
-        self.x_img = pygame.transform.scale(self.x_img, (self.w_rezise, self.h_rezise))
-        self.o_img = pygame.transform.scale(self.o_img, (self.w_rezise, self.h_rezise))
+        self.w_resize, self.h_resize = 110, 110
+        self.x_img = pygame.transform.scale(self.x_img, (self.w_resize, self.h_resize))
+        self.o_img = pygame.transform.scale(self.o_img, (self.w_resize, self.h_resize))
         # Game state
         self.current_player = "X"
         self.board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
@@ -178,7 +178,7 @@ class AI:
             screen.blit(o_img, (x_pos, y_pos))
             current_player_turn = "X"
         else:
-            self.pick_random_ai(current_player_turn, o_img, board, screen)
+            self.pick_random_ai(game_variable.current_player_turn, game_variable.o_img, game_variable.board, game_variable.screen)
 
     def flip_ai_player(self, current_player_turn):
         """Change turns for player and computer"""
@@ -258,15 +258,13 @@ while True:
             sys.exit()
         if event.type == pygame.MOUSEBUTTONDOWN:
             if not game_variable.won_x or game_variable.won_o:
-                ai.pick_random_ai(game_variable.current_player_turn, game_variable.o_img, game_variable.board, game_variable.screen)
                 ai.best_ai(game_variable.board, game_variable.screen, game_variable.current_player_turn, game_variable.o_img)
                 rectangles.logic_handling(ai.is_player_click)
-                ai.flip_ai_player(game_variable.current_player_turn)
                 score.score_x(game_variable.x_score, game_variable.screen)
                 score.score_o(game_variable.o_score, game_variable.screen)
                 game_variable.check_win(game_variable.num)
                 game_variable.num()
-            game_variable.draw_text_won()
+                game_variable.draw_text_won()
 
             if game_variable.won_x is False and game_variable.won_o is False and game_variable.is_board_fill():
                 game_variable.tie()
