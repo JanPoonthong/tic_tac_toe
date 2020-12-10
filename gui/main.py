@@ -208,7 +208,7 @@ class AI:
             if self.current_player == "X":
                 screen.blit(self.x_img, (x_pos, o_pos))
                 board.cell[index_board][index_board_two] = 1
-                if not is_board_fill(board):
+                if not board.is_board_fill():
                     self.best_ai(board, screen)
                     self.flip_ai_player()
 
@@ -299,7 +299,7 @@ def main():
                     game_variable.num(is_end.check_win, draw_score.draw_text_won,
                                       board)
                 if (game_variable.won_x is False and game_variable.won_o is False
-                        and board.is_board_fill(board)):
+                        and board.is_board_fill()):
                     draw_score.tie(game_variable.screen)
                 if game_variable.is_game_end is False:
                     if is_end.check_win(1, board):
