@@ -211,28 +211,47 @@ class AI:
 
 
 class Rectangle:
+    def __init__(self):
+        self.first = None
+        self.second = None
+        self.third = None
+        self.fourth = None
+        self.fifth = None
+        self.sixth = None
+        self.seventh = None
+        self.eighth = None
+        self.ninth = None
+        # cells = [self.first, self.second, self.third, self.fourth, self.fifth,
+        #         self.sixth, self.seventh, self.eighth, self.ninth]
+        # for cell in cells:
+        #     self.cell = None
+
     def rects(self, screen):
         """Draw all the nine box for place x and o images"""
         width, height = 150, 150
         position = [25, 200, 375]
-        self.first = pygame.draw.rect(screen, WHITE,
-                                      (position[0], position[0], width, height))
-        self.second = pygame.draw.rect(screen, WHITE,
-                                       (position[1], position[0], width, height))
-        self.third = pygame.draw.rect(screen, WHITE,
-                                      (position[2], position[0], width, height))
-        self.fourth = pygame.draw.rect(screen, WHITE,
-                                       (position[0], position[1], width, height))
-        self.fifth = pygame.draw.rect(screen, WHITE,
-                                      (position[1], position[1], width, height))
-        self.sixth = pygame.draw.rect(screen, WHITE,
-                                      (position[2], position[1], width, height))
-        self.seventh = pygame.draw.rect(screen, WHITE,
-                                        (position[0], position[2], width, height))
-        self.eighth = pygame.draw.rect(screen, WHITE,
-                                       (position[1], position[2], width, height))
-        self.ninth = pygame.draw.rect(screen, WHITE,
-                                      (position[2], position[2], width, height))
+        cell = [self.first, self.second, self.third, self.fourth, self.fifth,
+                self.sixth, self.seventh, self.eighth, self.ninth]
+        for i in range(3):
+            for j in range(3):
+                cell[0] = pygame.draw.rect(screen, WHITE,
+                                           (position[i], position[j], width, height))
+                cell[1] = pygame.draw.rect(screen, WHITE,
+                                           (position[i], position[j], width, height))
+                cell[2] = pygame.draw.rect(screen, WHITE,
+                                           (position[i], position[j], width, height))
+                cell[3] = pygame.draw.rect(screen, WHITE,
+                                           (position[i], position[j], width, height))
+                cell[4] = pygame.draw.rect(screen, WHITE,
+                                           (position[i], position[j], width, height))
+                cell[5] = pygame.draw.rect(screen, WHITE,
+                                           (position[i], position[j], width, height))
+                cell[6] = pygame.draw.rect(screen, WHITE,
+                                           (position[i], position[j], width, height))
+                cell[7] = pygame.draw.rect(screen, WHITE,
+                                           (position[i], position[j], width, height))
+                cell[8] = pygame.draw.rect(screen, WHITE,
+                                           (position[i], position[j], width, height))
 
     def logic_handling(self, is_click, won, board, screen):
         """All the logic handling happens here"""
