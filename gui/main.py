@@ -36,7 +36,7 @@ class GameVariables:
         self.won_o = False
         self.is_game_end = False
 
-    def num(self, check_win, draw_text_won, board):
+    def num(self, check_win, draw_text_won):
         """Check if player = 1 win or computer = 2"""
         if check_win(1):
             self.won_x = True
@@ -285,8 +285,7 @@ def main():
                                               board, game_variable.screen)
                     score.score_x(game_variable.screen)
                     score.score_o(game_variable.screen)
-                    game_variable.num(board.check_win, draw_score.draw_text_won,
-                                      board)
+                    game_variable.num(board.check_win, draw_score.draw_text_won)
                 if (game_variable.won_x is False and game_variable.won_o is False
                         and board.is_board_fill()):
                     draw_score.tie(game_variable.screen)
