@@ -220,6 +220,7 @@ class Rectangle:
         position = [25, 200, 375]
         for i in range(3):
             for j in range(3):
+                # TODO(jan): Put self.box[num] inside a loop
                 self.box[0] = pygame.draw.rect(screen, WHITE,
                                                (position[j], position[i], width, height))
                 self.box[1] = pygame.draw.rect(screen, WHITE,
@@ -245,6 +246,7 @@ class Rectangle:
         box_pos = [0, 1, 2]
         if won:
             return
+        # TODO(jan): Put inside a loop
         is_click(self.box[0], box_pos[0], box_pos[0], position[0], position[0],
                  board, screen)
         is_click(self.box[1], box_pos[0], box_pos[1], position[1], position[0],
