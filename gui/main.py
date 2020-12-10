@@ -52,7 +52,7 @@ class Board:
     def clear(self):
         self.cell = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
 
-    def is_board_fill(self, board):
+    def is_board_fill(self):
         """Check board is fill so that program know game is tie"""
         return self.cell[0][0] != 0 and self.cell[0][1] != 0 and \
             self.cell[0][2] != 0 and self.cell[1][0] != 0 and \
