@@ -211,17 +211,6 @@ class AI:
 
 
 class Rectangle:
-    def __init__(self):
-        self.first = None
-        self.second = None
-        self.third = None
-        self.fourth = None
-        self.fifth = None
-        self.sixth = None
-        self.seventh = None
-        self.eighth = None
-        self.ninth = None
-
     def rects(self, screen):
         """Draw all the nine box for place x and o images"""
         width, height = 150, 150
