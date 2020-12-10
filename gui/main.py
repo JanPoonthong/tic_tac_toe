@@ -38,9 +38,9 @@ class GameVariables:
 
     def num(self, check_win, draw_text_won, board):
         """Check if player = 1 win or computer = 2"""
-        if check_win(1, board):
+        if check_win(1):
             self.won_x = True
-        elif check_win(2, board):
+        elif check_win(2):
             self.won_o = True
         draw_text_won(self.won_x, self.screen, self.won_o)
 
@@ -60,12 +60,9 @@ class Board:
             self.cell[2][0] != 0 and self.cell[2][1] != 0 and \
             self.cell[2][2] != 0
 
-
-class IsGameEnd:
-    @staticmethod
-    def check_win(number, board):
+    def check_win(self, number):
         """Check all the win on the board"""
-        for row in board.cell:
+        for row in self.cell:
             for tile in row:
                 if tile == number:
                     continue
@@ -73,20 +70,20 @@ class IsGameEnd:
             else:
                 return True
         for column in range(3):
-            for row in board.cell:
+            for row in self.cell:
                 if row[column] == number:
                     continue
                 break
             else:
                 return True
         for tile in range(3):
-            if board.cell[tile][tile] == number:
+            if self.cell[tile][tile] == number:
                 continue
             break
         else:
             return True
         for tile in range(3):
-            if board.cell[tile][2 - tile] == number:
+            if self.cell[tile][2 - tile] == number:
                 continue
             break
         else:
@@ -280,7 +277,6 @@ def main():
     ai = AI()
     score = Score()
     draw_score = DrawScore()
-    is_end = IsGameEnd()
     board = Board()
 
     rectangles.rects(game_variable.screen)
@@ -295,17 +291,17 @@ def main():
                                               board, game_variable.screen)
                     score.score_x(game_variable.screen)
                     score.score_o(game_variable.screen)
-                    game_variable.num(is_end.check_win, draw_score.draw_text_won,
+                    game_variable.num(board.check_win, draw_score.draw_text_won,
                                       board)
                 if (game_variable.won_x is False and game_variable.won_o is False
                         and board.is_board_fill()):
                     draw_score.tie(game_variable.screen)
                 if game_variable.is_game_end is False:
-                    if is_end.check_win(1, board):
+                    if board.check_win(1):
                         game_variable.is_game_end = True
                         game_variable.won = True
                         score.x_score += 1
-                    if is_end.check_win(2, board):
+                    if board.check_win(2):
                         game_variable.is_game_end = True
                         game_variable.won = True
                         score.o_score += 1
