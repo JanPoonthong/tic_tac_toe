@@ -200,7 +200,7 @@ class AI:
             self.current_player_turn = "X"
 
     def is_player_click(self, position, index_board, index_board_two, x_pos,
-                        o_pos, board, screen, is_board_fill):
+                        o_pos, board, screen):
         """Check all the logic here, including mouse click, placing images,
         updating the board"""
         pos = pygame.mouse.get_pos()
@@ -248,30 +248,30 @@ class Rectangle:
         self.ninth = pygame.draw.rect(screen, WHITE,
                                       (position[2], position[2], width, height))
 
-    def logic_handling(self, is_click, won, board, screen, is_board_fill):
+    def logic_handling(self, is_click, won, board, screen):
         """All the logic handling happens here"""
         position = [50, 225, 400]
         box_pos = [0, 1, 2]
         if won:
             return
         is_click(self.first, box_pos[0], box_pos[0], position[0], position[0],
-                 board, screen, is_board_fill)
+                 board, screen)
         is_click(self.second, box_pos[0], box_pos[1], position[1], position[0],
-                 board, screen, is_board_fill)
+                 board, screen)
         is_click(self.third, box_pos[0], box_pos[2], position[2], position[0],
-                 board, screen, is_board_fill)
+                 board, screen)
         is_click(self.fourth, box_pos[1], box_pos[0], position[0], position[1],
-                 board, screen, is_board_fill)
+                 board, screen)
         is_click(self.fifth, box_pos[1], box_pos[1], position[1], position[1],
-                 board, screen, is_board_fill)
+                 board, screen)
         is_click(self.sixth, box_pos[1], box_pos[2], position[2], position[1],
-                 board, screen, is_board_fill)
+                 board, screen)
         is_click(self.seventh, box_pos[2], box_pos[0], position[0], position[2],
-                 board, screen, is_board_fill)
+                 board, screen)
         is_click(self.eighth, box_pos[2], box_pos[1], position[1], position[2],
-                 board, screen, is_board_fill)
+                 board, screen)
         is_click(self.ninth, box_pos[2], box_pos[2], position[2], position[2],
-                 board, screen, is_board_fill)
+                 board, screen)
 
 
 def main():
@@ -292,8 +292,7 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if not game_variable.won_x or game_variable.won_o:
                     rectangles.logic_handling(ai.is_player_click, game_variable.won,
-                                              board, game_variable.screen,
-                                              board.is_board_fill)
+                                              board, game_variable.screen)
                     score.score_x(game_variable.screen)
                     score.score_o(game_variable.screen)
                     game_variable.num(is_end.check_win, draw_score.draw_text_won,
