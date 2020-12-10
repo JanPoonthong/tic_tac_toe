@@ -284,10 +284,12 @@ def main():
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if not game_variable.won_x or game_variable.won_o:
-                    rectangles.logic_handling(ai.is_player_click, game_variable.won, game_variable.board, game_variable.screen, is_end.is_board_fill(game_variable.board))
+                    rectangles.logic_handling(ai.is_player_click, game_variable.won,
+                                              game_variable.board, game_variable.screen,
+                                              is_end.is_board_fill)
                     score.score_x(game_variable.screen)
                     score.score_o(game_variable.screen)
-                    game_variable.num(is_end.check_win(1, game_variable.board), draw_score.draw_text_won(game_variable.won_x, game_variable.screen, game_variable.won_o))
+                    game_variable.num(is_end.check_win, draw_score.draw_text_won)
                 if (game_variable.won_x is False and game_variable.won_o is False
                         and is_end.is_board_fill(game_variable.board)):
                     draw_score.tie(game_variable.screen)
