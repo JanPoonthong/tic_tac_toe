@@ -221,6 +221,17 @@ class Rectangle:
         self.seventh = None
         self.eighth = None
         self.ninth = None
+        box = {
+            "first": None,
+            "second": None,
+            "third": None,
+            "fourth": None,
+            "fifth": None,
+            "sixth": None,
+            "eighth": None,
+            "ninth": None
+        }
+        print(box)
         # box = [self.first, self.second, self.third, self.fourth, self.fifth,
         #        self.sixth, self.seventh, self.eighth, self.ninth]]
         # for cell in cells:
