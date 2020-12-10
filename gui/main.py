@@ -31,17 +31,16 @@ class GameVariables:
     def __init__(self):
         self.width, self.height = 550, 650
         self.screen = pygame.display.set_mode((self.width, self.height))
-        self.board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
         self.won = False
         self.won_x = False
         self.won_o = False
         self.is_game_end = False
 
-    def num(self, check_win, draw_text_won):
+    def num(self, check_win, draw_text_won, board):
         """Check if player = 1 win or computer = 2"""
-        if check_win(1, self.board):
+        if check_win(1, board):
             self.won_x = True
-        elif check_win(2, self.board):
+        elif check_win(2, board):
             self.won_o = True
         draw_text_won(self.won_x, self.screen, self.won_o)
 
@@ -280,6 +279,7 @@ def main():
     score = Score()
     draw_score = DrawScore()
     is_end = IsGameEnd()
+    board = Board()
 
     rectangles.rects(game_variable.screen)
     while True:
@@ -290,20 +290,21 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if not game_variable.won_x or game_variable.won_o:
                     rectangles.logic_handling(ai.is_player_click, game_variable.won,
-                                              game_variable.board, game_variable.screen,
+                                              board.board, game_variable.screen,
                                               is_end.is_board_fill)
                     score.score_x(game_variable.screen)
                     score.score_o(game_variable.screen)
-                    game_variable.num(is_end.check_win, draw_score.draw_text_won)
+                    game_variable.num(is_end.check_win, draw_score.draw_text_won,
+                                      board.board)
                 if (game_variable.won_x is False and game_variable.won_o is False
-                        and is_end.is_board_fill(game_variable.board)):
+                        and is_end.is_board_fill(board.board)):
                     draw_score.tie(game_variable.screen)
                 if game_variable.is_game_end is False:
-                    if is_end.check_win(1, game_variable.board):
+                    if is_end.check_win(1, board.board):
                         game_variable.is_game_end = True
                         game_variable.won = True
                         score.x_score += 1
-                    if is_end.check_win(2, game_variable.board):
+                    if is_end.check_win(2, board.board):
                         game_variable.is_game_end = True
                         game_variable.won = True
                         score.o_score += 1
@@ -313,7 +314,7 @@ def main():
                     game_variable.won_o = False
                     game_variable.won = False
                     game_variable.is_game_end = False
-                    game_variable.board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+                    board.board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
                     game_variable.screen.fill((0, 0, 0))
                     rectangles.rects(game_variable.screen)
                     score.score_x(game_variable.screen)
