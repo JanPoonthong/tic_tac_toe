@@ -46,6 +46,11 @@ class GameVariables:
         draw_text_won(self.won_x, self.screen, self.won_o)
 
 
+class Board:
+    def __init__(self):
+        self.board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+
+
 class IsGameEnd:
     @staticmethod
     def check_win(number, board):
