@@ -212,7 +212,7 @@ class AI:
 
 class Rectangle:
     def __init__(self):
-        box = {
+        self.box = {
             "first": None,
             "second": None,
             "third": None,
@@ -223,15 +223,15 @@ class Rectangle:
             "eighth": None,
             "ninth": None
         }
-        self.first = box["first"]
-        self.second = box["second"]
-        self.third = box["third"]
-        self.fourth = box["fourth"]
-        self.fifth = box["fifth"]
-        self.sixth = box["sixth"]
-        self.seventh = box["seventh"]
-        self.eighth = box["eighth"]
-        self.ninth = box["ninth"]
+        self.first = self.box["first"]
+        self.second = self.box["second"]
+        self.third = self.box["third"]
+        self.fourth = self.box["fourth"]
+        self.fifth = self.box["fifth"]
+        self.sixth = self.box["sixth"]
+        self.seventh = self.box["seventh"]
+        self.eighth = self.box["eighth"]
+        self.ninth = self.box["ninth"]
         # box = [self.first, self.second, self.third, self.fourth, self.fifth,
         #        self.sixth, self.seventh, self.eighth, self.ninth]]
         # for cell in cells:
