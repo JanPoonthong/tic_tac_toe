@@ -47,14 +47,25 @@ class GameVariables:
 
 class Board:
     def __init__(self):
-        self.board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+        self.cell = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+
+    def clear(self):
+        self.cell = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+
+    def is_board_fill(self, board):
+        """Check board is fill so that program know game is tie"""
+        return self.cell[0][0] != 0 and self.cell[0][1] != 0 and \
+            self.cell[0][2] != 0 and self.cell[1][0] != 0 and \
+            self.cell[1][1] != 0 and self.cell[1][2] != 0 and \
+            self.cell[2][0] != 0 and self.cell[2][1] != 0 and \
+            self.cell[2][2] != 0
 
 
 class IsGameEnd:
     @staticmethod
     def check_win(number, board):
         """Check all the win on the board"""
-        for row in board.board:
+        for row in board.cell:
             for tile in row:
                 if tile == number:
                     continue
@@ -62,33 +73,24 @@ class IsGameEnd:
             else:
                 return True
         for column in range(3):
-            for row in board.board:
+            for row in board.cell:
                 if row[column] == number:
                     continue
                 break
             else:
                 return True
         for tile in range(3):
-            if board.board[tile][tile] == number:
+            if board.cell[tile][tile] == number:
                 continue
             break
         else:
             return True
         for tile in range(3):
-            if board.board[tile][2 - tile] == number:
+            if board.cell[tile][2 - tile] == number:
                 continue
             break
         else:
             return True
-
-    @staticmethod
-    def is_board_fill(board):
-        """Check board is fill so that program know game is tie"""
-        return board.board[0][0] != 0 and board.board[0][1] != 0 and \
-            board.board[0][2] != 0 and board.board[1][0] != 0 and \
-            board.board[1][1] != 0 and board.board[1][2] != 0 and \
-            board.board[2][0] != 0 and board.board[2][1] != 0 and \
-            board.board[2][2] != 0
 
 
 class DrawScore:
@@ -148,43 +150,43 @@ class AI:
             column = random.randint(0, 2)
             x_pos = [50, 225, 400][column]
             y_pos = [50, 225, 400][row]
-            if board.board[row][column] == 0:
+            if board.cell[row][column] == 0:
                 screen.blit(self.o_img, (x_pos, y_pos))
-                board.board[row][column] = 2
+                board.cell[row][column] = 2
                 self.current_player_turn = "X"
 
     def best_ai(self, board, screen):
         """Hardcode path for ai"""
-        if board.board[1][1] == 0:
+        if board.cell[1][1] == 0:
             screen.blit(self.o_img, (225, 225))
-            board.board[1][1] = 2
+            board.cell[1][1] = 2
             self.current_player_turn = "X"
-        elif board.board[0][2] == 0:
+        elif board.cell[0][2] == 0:
             screen.blit(self.o_img, (400, 50))
-            board.board[0][2] = 2
+            board.cell[0][2] = 2
             self.current_player_turn = "X"
-        elif board.board[0][1] == 1 and board.board[0][2] == 1 and board.board[0][0] == 0:
+        elif board.cell[0][1] == 1 and board.cell[0][2] == 1 and board.cell[0][0] == 0:
             x_pos = [50, 225, 400][0]
             y_pos = [50, 225, 400][0]
-            board.board[0][0] = 2
+            board.cell[0][0] = 2
             screen.blit(self.o_img, (x_pos, y_pos))
             self.current_player_turn = "X"
-        elif board.board[1][1] == 1 and board.board[1][2] == 1 and board.board[0][1] == 0:
+        elif board.cell[1][1] == 1 and board.cell[1][2] == 1 and board.cell[0][1] == 0:
             x_pos = [50, 225, 400][0]
             y_pos = [50, 225, 400][1]
-            board.board[1][0] = 2
+            board.cell[1][0] = 2
             screen.blit(self.o_img, (x_pos, y_pos))
             self.current_player_turn = "X"
-        elif board.board[2][1] == 1 and board.board[2][2] == 1 and board.board[2][0] == 0:
+        elif board.cell[2][1] == 1 and board.cell[2][2] == 1 and board.cell[2][0] == 0:
             x_pos = [50, 225, 400][0]
             y_pos = [50, 225, 400][2]
-            board.board[2][0] = 2
+            board.cell[2][0] = 2
             screen.blit(self.o_img, (x_pos, y_pos))
             self.current_player_turn = "X"
-        elif board.board[0][0] == 1 and board.board[1][0] == 1 and board.board[2][0] == 0:
+        elif board.cell[0][0] == 1 and board.cell[1][0] == 1 and board.cell[2][0] == 0:
             x_pos = [50, 225, 400][0]
             y_pos = [50, 225, 400][2]
-            board.board[2][0] = 2
+            board.cell[2][0] = 2
             screen.blit(self.o_img, (x_pos, y_pos))
             self.current_player_turn = "X"
         else:
@@ -202,10 +204,10 @@ class AI:
         """Check all the logic here, including mouse click, placing images,
         updating the board"""
         pos = pygame.mouse.get_pos()
-        if position.collidepoint(pos) and board.board[index_board][index_board_two] == 0:
+        if position.collidepoint(pos) and board.cell[index_board][index_board_two] == 0:
             if self.current_player == "X":
                 screen.blit(self.x_img, (x_pos, o_pos))
-                board.board[index_board][index_board_two] = 1
+                board.cell[index_board][index_board_two] = 1
                 if not is_board_fill(board):
                     self.best_ai(board, screen)
                     self.flip_ai_player()
@@ -291,13 +293,13 @@ def main():
                 if not game_variable.won_x or game_variable.won_o:
                     rectangles.logic_handling(ai.is_player_click, game_variable.won,
                                               board, game_variable.screen,
-                                              is_end.is_board_fill)
+                                              board.is_board_fill)
                     score.score_x(game_variable.screen)
                     score.score_o(game_variable.screen)
                     game_variable.num(is_end.check_win, draw_score.draw_text_won,
                                       board)
                 if (game_variable.won_x is False and game_variable.won_o is False
-                        and is_end.is_board_fill(board)):
+                        and board.is_board_fill(board)):
                     draw_score.tie(game_variable.screen)
                 if game_variable.is_game_end is False:
                     if is_end.check_win(1, board):
@@ -314,7 +316,7 @@ def main():
                     game_variable.won_o = False
                     game_variable.won = False
                     game_variable.is_game_end = False
-                    board.board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+                    board.clear()
                     game_variable.screen.fill((0, 0, 0))
                     rectangles.rects(game_variable.screen)
                     score.score_x(game_variable.screen)
