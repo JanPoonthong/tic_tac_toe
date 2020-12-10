@@ -213,15 +213,15 @@ class AI:
 class Rectangle:
     def __init__(self):
         self.box = {
-            "first": None,
-            "second": None,
-            "third": None,
-            "fourth": None,
-            "fifth": None,
-            "sixth": None,
-            "seventh": None,
-            "eighth": None,
-            "ninth": None
+            0: None,
+            1: None,
+            2: None,
+            3: None,
+            4: None,
+            5: None,
+            6: None,
+            7: None,
+            8: None
         }
 
     def rects(self, screen):
@@ -230,24 +230,24 @@ class Rectangle:
         position = [25, 200, 375]
         for i in range(3):
             for j in range(3):
-                self.box["first"] = pygame.draw.rect(screen, WHITE,
-                                                     (position[j], position[i], width, height))
-                self.box["second"] = pygame.draw.rect(screen, WHITE,
-                                                      (position[j], position[i], width, height))
-                self.box["third"] = pygame.draw.rect(screen, WHITE,
-                                                     (position[j], position[i], width, height))
-                self.box["fourth"] = pygame.draw.rect(screen, WHITE,
-                                                      (position[j], position[i], width, height))
-                self.box["fifth"] = pygame.draw.rect(screen, WHITE,
-                                                     (position[j], position[i], width, height))
-                self.box["sixth"] = pygame.draw.rect(screen, WHITE,
-                                                     (position[j], position[i], width, height))
-                self.box["seventh"] = pygame.draw.rect(screen, WHITE,
-                                                       (position[j], position[i], width, height))
-                self.box["eighth"] = pygame.draw.rect(screen, WHITE,
-                                                      (position[j], position[i], width, height))
-                self.box["ninth"] = pygame.draw.rect(screen, WHITE,
-                                                     (position[j], position[i], width, height))
+                self.box[0] = pygame.draw.rect(screen, WHITE,
+                                               (position[j], position[i], width, height))
+                self.box[1] = pygame.draw.rect(screen, WHITE,
+                                               (position[j], position[i], width, height))
+                self.box[2] = pygame.draw.rect(screen, WHITE,
+                                               (position[j], position[i], width, height))
+                self.box[3] = pygame.draw.rect(screen, WHITE,
+                                               (position[j], position[i], width, height))
+                self.box[4] = pygame.draw.rect(screen, WHITE,
+                                               (position[j], position[i], width, height))
+                self.box[5] = pygame.draw.rect(screen, WHITE,
+                                               (position[j], position[i], width, height))
+                self.box[6] = pygame.draw.rect(screen, WHITE,
+                                               (position[j], position[i], width, height))
+                self.box[7] = pygame.draw.rect(screen, WHITE,
+                                               (position[j], position[i], width, height))
+                self.box[8] = pygame.draw.rect(screen, WHITE,
+                                               (position[j], position[i], width, height))
 
     def logic_handling(self, is_click, won, board, screen):
         """All the logic handling happens here"""
@@ -255,23 +255,23 @@ class Rectangle:
         box_pos = [0, 1, 2]
         if won:
             return
-        is_click(self.box["first"], box_pos[0], box_pos[0], position[0], position[0],
+        is_click(self.box[0], box_pos[0], box_pos[0], position[0], position[0],
                  board, screen)
-        is_click(self.box["second"], box_pos[0], box_pos[1], position[1], position[0],
+        is_click(self.box[1], box_pos[0], box_pos[1], position[1], position[0],
                  board, screen)
-        is_click(self.box["third"], box_pos[0], box_pos[2], position[2], position[0],
+        is_click(self.box[2], box_pos[0], box_pos[2], position[2], position[0],
                  board, screen)
-        is_click(self.box["fourth"], box_pos[1], box_pos[0], position[0], position[1],
+        is_click(self.box[3], box_pos[1], box_pos[0], position[0], position[1],
                  board, screen)
-        is_click(self.box["fifth"], box_pos[1], box_pos[1], position[1], position[1],
+        is_click(self.box[4], box_pos[1], box_pos[1], position[1], position[1],
                  board, screen)
-        is_click(self.box["sixth"], box_pos[1], box_pos[2], position[2], position[1],
+        is_click(self.box[5], box_pos[1], box_pos[2], position[2], position[1],
                  board, screen)
-        is_click(self.box["seventh"], box_pos[2], box_pos[0], position[0], position[2],
+        is_click(self.box[6], box_pos[2], box_pos[0], position[0], position[2],
                  board, screen)
-        is_click(self.box["eighth"], box_pos[2], box_pos[1], position[1], position[2],
+        is_click(self.box[7], box_pos[2], box_pos[1], position[1], position[2],
                  board, screen)
-        is_click(self.box["ninth"], box_pos[2], box_pos[2], position[2], position[2],
+        is_click(self.box[8], box_pos[2], box_pos[2], position[2], position[2],
                  board, screen)
 
 
