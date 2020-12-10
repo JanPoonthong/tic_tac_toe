@@ -212,17 +212,7 @@ class AI:
 
 class Rectangle:
     def __init__(self):
-        self.box = {
-            0: None,
-            1: None,
-            2: None,
-            3: None,
-            4: None,
-            5: None,
-            6: None,
-            7: None,
-            8: None
-        }
+        self.box = [None] * 9
 
     def rects(self, screen):
         """Draw all the nine box for place x and o images"""
