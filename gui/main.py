@@ -65,11 +65,11 @@ class Board:
 
     def is_board_fill(self):
         """Check board is fill so that program know game is tie"""
-        return self.cell[0][0] != 0 and self.cell[0][1] != 0 and \
-            self.cell[0][2] != 0 and self.cell[1][0] != 0 and \
-            self.cell[1][1] != 0 and self.cell[1][2] != 0 and \
-            self.cell[2][0] != 0 and self.cell[2][1] != 0 and \
-            self.cell[2][2] != 0
+        for i in range(3):
+            for j in range(3):
+                if self.cell[i][j] == 0:
+                    return False
+        return True
 
     def check_win(self, number):
         """Check all the win on the board"""
