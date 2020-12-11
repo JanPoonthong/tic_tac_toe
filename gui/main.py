@@ -58,10 +58,10 @@ class GameVariables:
 
 class Board:
     def __init__(self):
-        self.cell = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+        self.clear()
 
     def clear(self):
-        self.__init__()
+        self.cell = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
 
     def is_board_fill(self):
         """Check board is fill so that program know game is tie"""
