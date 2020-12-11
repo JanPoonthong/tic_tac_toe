@@ -132,12 +132,12 @@ class Score:
 
 class AI:
     def __init__(self):
-        self.current_player_turn = "X"
         self.w_resize, self.h_resize = 110, 110
         self.x_img = pygame.image.load(os.path.join(project_directory, "img/x.png"))
         self.o_img = pygame.image.load(os.path.join(project_directory, "img/o.png"))
         self.x_img = pygame.transform.scale(self.x_img, (self.w_resize, self.h_resize))
         self.o_img = pygame.transform.scale(self.o_img, (self.w_resize, self.h_resize))
+        self.current_player_turn = "X"
         self.current_player = "X"
 
     def pick_random_ai(self, board, screen):
@@ -152,40 +152,25 @@ class AI:
                 board.cell[row][column] = 2
                 self.current_player_turn = "X"
 
+    def hardcode_path(self, pos_one, pos_two, cell_one, cell_two, board, screen):
+        screen.blit(self.o_img, (pos_one, pos_two))
+        board.cell[cell_one][cell_two] = 2
+        self.current_player_turn = "X"
+
     def best_ai(self, board, screen):
         """Hardcode path for ai"""
         if board.cell[1][1] == 0:
-            screen.blit(self.o_img, (225, 225))
-            board.cell[1][1] = 2
-            self.current_player_turn = "X"
+            self.hardcode_path(225, 225, 1, 1, board, screen)
         elif board.cell[0][2] == 0:
-            screen.blit(self.o_img, (400, 50))
-            board.cell[0][2] = 2
-            self.current_player_turn = "X"
+            self.hardcode_path(400, 50, 0, 2, board, screen)
         elif board.cell[0][1] == 1 and board.cell[0][2] == 1 and board.cell[0][0] == 0:
-            x_pos = [50, 225, 400][0]
-            y_pos = [50, 225, 400][0]
-            board.cell[0][0] = 2
-            screen.blit(self.o_img, (x_pos, y_pos))
-            self.current_player_turn = "X"
+            self.hardcode_path(50, 50, 0, 0, board, screen)
         elif board.cell[1][1] == 1 and board.cell[1][2] == 1 and board.cell[0][1] == 0:
-            x_pos = [50, 225, 400][0]
-            y_pos = [50, 225, 400][1]
-            board.cell[1][0] = 2
-            screen.blit(self.o_img, (x_pos, y_pos))
-            self.current_player_turn = "X"
+            self.hardcode_path(50, 225, 1, 0, board, screen)
         elif board.cell[2][1] == 1 and board.cell[2][2] == 1 and board.cell[2][0] == 0:
-            x_pos = [50, 225, 400][0]
-            y_pos = [50, 225, 400][2]
-            board.cell[2][0] = 2
-            screen.blit(self.o_img, (x_pos, y_pos))
-            self.current_player_turn = "X"
+            self.hardcode_path(50, 400, 2, 0, board, screen)
         elif board.cell[0][0] == 1 and board.cell[1][0] == 1 and board.cell[2][0] == 0:
-            x_pos = [50, 225, 400][0]
-            y_pos = [50, 225, 400][2]
-            board.cell[2][0] = 2
-            screen.blit(self.o_img, (x_pos, y_pos))
-            self.current_player_turn = "X"
+            self.hardcode_path(50, 400, 2, 0, board, screen)
         else:
             self.pick_random_ai(board, screen)
 
@@ -212,7 +197,6 @@ class AI:
 
 class Rectangle:
     def __init__(self):
-        self.box = [None] * 9
         self.boxs = []
 
     def rects(self, screen):
