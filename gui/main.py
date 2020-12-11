@@ -230,10 +230,11 @@ class Rectangle:
         box_pos = [0, 1, 2]
         if won:
             return
-        for i in range(3):
-            for j in range(3):
-                is_click(self.boxs, box_pos[i], box_pos[j], position[j], position[i],
-                         board, screen)
+        for index in range(9):
+            for i in range(3):
+                for j in range(3):
+                    is_click(self.boxs[index], box_pos[i], box_pos[j], position[j], position[i],
+                             board, screen)
 
 
 def main():
