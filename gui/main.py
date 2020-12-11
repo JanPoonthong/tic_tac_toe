@@ -91,27 +91,26 @@ class Board:
 
 
 class DrawScore:
-    @staticmethod
-    def draw_text_won(won_x, screen, won_o):
+    def draw_text_pos(self, screen, pos_one, pos_two, apos_one, apos_two):
+        screen.blit(self.over_text, (pos_one, pos_two))
+        screen.blit(self.space_text, (apos_one, apos_two))
+
+    def draw_text_won(self, won_x, screen, won_o):
         """When someone won, this function will run"""
         if won_x:
-            over_text = OVER_FONT.render("X won", True, LIGHT_BLUE)
-            space_text = OVER_FONT.render("Space bar for clear", True, LIGHT_BLUE)
-            screen.blit(over_text, (220, 200))
-            screen.blit(space_text, (50, 300))
+            self.over_text = OVER_FONT.render("X won", True, LIGHT_BLUE)
+            self.space_text = OVER_FONT.render("Space bar for clear", True, LIGHT_BLUE)
+            self.draw_text_pos(screen, 215, 230, 50, 300)
         elif won_o:
-            over_text = OVER_FONT.render("Computer won", True, PINK)
-            space_text = OVER_FONT.render("Space bar for clear", True, PINK)
-            screen.blit(over_text, (140, 200))
-            screen.blit(space_text, (50, 300))
+            self.over_text = OVER_FONT.render("Computer won", True, PINK)
+            self.space_text = OVER_FONT.render("Space bar for clear", True, PINK)
+            self.draw_text_pos(screen, 140, 230, 50, 300)
 
-    @staticmethod
-    def tie(screen):
+    def tie(self, screen):
         """When game tie, this function will run"""
-        tie_text = OVER_FONT.render("Tie", True, DARK_BLUE)
-        space_text = OVER_FONT.render("Space bar for clear", True, DARK_BLUE)
-        screen.blit(tie_text, (220, 200))
-        screen.blit(space_text, (50, 300))
+        self.over_text = OVER_FONT.render("Tie", True, DARK_BLUE)
+        self.space_text = OVER_FONT.render("Space bar for clear", True, DARK_BLUE)
+        self.draw_text_pos(screen, 225, 230, 50, 300)
 
 
 class Score:
