@@ -230,24 +230,10 @@ class Rectangle:
         box_pos = [0, 1, 2]
         if won:
             return
-        is_click(self.boxs[0], box_pos[0], box_pos[0], position[0], position[0],
-                 board, screen)
-        is_click(self.boxs[1], box_pos[0], box_pos[1], position[1], position[0],
-                 board, screen)
-        is_click(self.boxs[2], box_pos[0], box_pos[2], position[2], position[0],
-                 board, screen)
-        is_click(self.boxs[3], box_pos[1], box_pos[0], position[0], position[1],
-                 board, screen)
-        is_click(self.boxs[4], box_pos[1], box_pos[1], position[1], position[1],
-                 board, screen)
-        is_click(self.boxs[5], box_pos[1], box_pos[2], position[2], position[1],
-                 board, screen)
-        is_click(self.boxs[6], box_pos[2], box_pos[0], position[0], position[2],
-                 board, screen)
-        is_click(self.boxs[7], box_pos[2], box_pos[1], position[1], position[2],
-                 board, screen)
-        is_click(self.boxs[8], box_pos[2], box_pos[2], position[2], position[2],
-                 board, screen)
+        for i in range(3):
+            for j in range(3):
+                is_click(self.boxs, box_pos[i], box_pos[j], position[j], position[i],
+                         board, screen)
 
 
 def main():
