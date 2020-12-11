@@ -36,7 +36,7 @@ class GameVariables:
         self.won_o = False
         self.is_game_end = False
 
-    def num(self, check_win, draw_text_won):
+    def draw_check_win(self, check_win, draw_text_won):
         """Check if player = 1 win or computer = 2"""
         if check_win(1):
             self.won_x = True
@@ -248,15 +248,18 @@ def main():
             if event.type == pygame.QUIT:
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
+                """Execute everytime when mouse is click"""
                 if not game_variable.won_x or game_variable.won_o:
                     rectangles.logic_handling(ai.is_player_click, game_variable.won,
                                               board, game_variable.screen)
                     score.score_x(game_variable.screen)
                     score.score_o(game_variable.screen)
-                    game_variable.num(board.check_win, draw_score.draw_text_won)
+                    game_variable.draw_check_win(board.check_win, draw_score.draw_text_won)
+                """If baord is fill(game tie) then draw tie text on the screen"""
                 if (game_variable.won_x is False and game_variable.won_o is False
                         and board.is_board_fill()):
                     draw_score.tie(game_variable.screen)
+                """If game is not yet end, keep on checking who who(player or AI)"""
                 if game_variable.is_game_end is False:
                     if board.check_win(1):
                         game_variable.is_game_end = True
@@ -266,6 +269,7 @@ def main():
                         game_variable.is_game_end = True
                         game_variable.won = True
                         score.o_score += 1
+            """If Space Bar is hit, rest the game state"""
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     game_variable.rest_game(board, rectangles, score)
