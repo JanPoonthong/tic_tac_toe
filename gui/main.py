@@ -213,7 +213,6 @@ class AI:
 class Rectangle:
     def __init__(self):
         self.box = [None] * 9
-        self.boxs = []
 
     def rects(self, screen):
         """Draw all the nine box for place x and o images"""
@@ -222,8 +221,24 @@ class Rectangle:
         for i in range(3):
             for j in range(3):
                 # TODO(jan): Put self.box[num] inside a loop
-                self.boxs.append(pygame.draw.rect(screen, WHITE,
-                                 (position[j], position[i], width, height)))
+                self.box[0] = pygame.draw.rect(screen, WHITE,
+                                               (position[j], position[i], width, height))
+                self.box[1] = pygame.draw.rect(screen, WHITE,
+                                               (position[j], position[i], width, height))
+                self.box[2] = pygame.draw.rect(screen, WHITE,
+                                               (position[j], position[i], width, height))
+                self.box[3] = pygame.draw.rect(screen, WHITE,
+                                               (position[j], position[i], width, height))
+                self.box[4] = pygame.draw.rect(screen, WHITE,
+                                               (position[j], position[i], width, height))
+                self.box[5] = pygame.draw.rect(screen, WHITE,
+                                               (position[j], position[i], width, height))
+                self.box[6] = pygame.draw.rect(screen, WHITE,
+                                               (position[j], position[i], width, height))
+                self.box[7] = pygame.draw.rect(screen, WHITE,
+                                               (position[j], position[i], width, height))
+                self.box[8] = pygame.draw.rect(screen, WHITE,
+                                               (position[j], position[i], width, height))
 
     def logic_handling(self, is_click, won, board, screen):
         """All the logic handling happens here"""
@@ -232,10 +247,24 @@ class Rectangle:
         if won:
             return
         # TODO(jan): Put inside a loop
-        for i in range(3):
-            for j in range(3):
-                is_click(self.boxs[j], box_pos[i], box_pos[j], position[j], position[i],
-                         board, screen)
+        is_click(self.box[0], box_pos[0], box_pos[0], position[0], position[0],
+                 board, screen)
+        is_click(self.box[1], box_pos[0], box_pos[1], position[1], position[0],
+                 board, screen)
+        is_click(self.box[2], box_pos[0], box_pos[2], position[2], position[0],
+                 board, screen)
+        is_click(self.box[3], box_pos[1], box_pos[0], position[0], position[1],
+                 board, screen)
+        is_click(self.box[4], box_pos[1], box_pos[1], position[1], position[1],
+                 board, screen)
+        is_click(self.box[5], box_pos[1], box_pos[2], position[2], position[1],
+                 board, screen)
+        is_click(self.box[6], box_pos[2], box_pos[0], position[0], position[2],
+                 board, screen)
+        is_click(self.box[7], box_pos[2], box_pos[1], position[1], position[2],
+                 board, screen)
+        is_click(self.box[8], box_pos[2], box_pos[2], position[2], position[2],
+                 board, screen)
 
 
 def main():
