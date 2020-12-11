@@ -213,16 +213,16 @@ class AI:
 class Rectangle:
     def __init__(self):
         self.box = [None] * 9
+        self.boxs = []
 
     def rects(self, screen):
         """Draw all the nine box for place x and o images"""
         width, height = 150, 150
         position = [25, 200, 375]
-        boxs = []
         for i in range(3):
             for j in range(3):
-                boxs.append(pygame.draw.rect(screen, WHITE,
-                                             (position[j], position[i], width, height)))
+                self.boxs.append(pygame.draw.rect(screen, WHITE,
+                                                  (position[j], position[i], width, height)))
 
     def logic_handling(self, is_click, won, board, screen):
         """All the logic handling happens here"""
@@ -230,23 +230,23 @@ class Rectangle:
         box_pos = [0, 1, 2]
         if won:
             return
-        is_click(self.box[0], box_pos[0], box_pos[0], position[0], position[0],
+        is_click(self.boxs[0], box_pos[0], box_pos[0], position[0], position[0],
                  board, screen)
-        is_click(self.box[1], box_pos[0], box_pos[1], position[1], position[0],
+        is_click(self.boxs[1], box_pos[0], box_pos[1], position[1], position[0],
                  board, screen)
-        is_click(self.box[2], box_pos[0], box_pos[2], position[2], position[0],
+        is_click(self.boxs[2], box_pos[0], box_pos[2], position[2], position[0],
                  board, screen)
-        is_click(self.box[3], box_pos[1], box_pos[0], position[0], position[1],
+        is_click(self.boxs[3], box_pos[1], box_pos[0], position[0], position[1],
                  board, screen)
-        is_click(self.box[4], box_pos[1], box_pos[1], position[1], position[1],
+        is_click(self.boxs[4], box_pos[1], box_pos[1], position[1], position[1],
                  board, screen)
-        is_click(self.box[5], box_pos[1], box_pos[2], position[2], position[1],
+        is_click(self.boxs[5], box_pos[1], box_pos[2], position[2], position[1],
                  board, screen)
-        is_click(self.box[6], box_pos[2], box_pos[0], position[0], position[2],
+        is_click(self.boxs[6], box_pos[2], box_pos[0], position[0], position[2],
                  board, screen)
-        is_click(self.box[7], box_pos[2], box_pos[1], position[1], position[2],
+        is_click(self.boxs[7], box_pos[2], box_pos[1], position[1], position[2],
                  board, screen)
-        is_click(self.box[8], box_pos[2], box_pos[2], position[2], position[2],
+        is_click(self.boxs[8], box_pos[2], box_pos[2], position[2], position[2],
                  board, screen)
 
 
