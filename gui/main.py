@@ -222,7 +222,8 @@ class Rectangle:
         for i in range(3):
             for j in range(3):
                 self.boxs.append(pygame.draw.rect(screen, WHITE,
-                                                  (position[j], position[i], width, height)))
+                                                  (position[j], position[i],
+                                                   width, height)))
 
     def logic_handling(self, is_click, won, board, screen):
         """All the logic handling happens here"""
@@ -233,8 +234,8 @@ class Rectangle:
             return
         for i in range(3):
             for j in range(3):
-                is_click(self.boxs[count], box_pos[i], box_pos[j], position[j], position[i],
-                         board, screen)
+                is_click(self.boxs[count], box_pos[i], box_pos[j], position[j],
+                         position[i], board, screen)
                 count += 1
 
 
