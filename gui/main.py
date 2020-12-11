@@ -44,6 +44,17 @@ class GameVariables:
             self.won_o = True
         draw_text_won(self.won_x, self.screen, self.won_o)
 
+    def rest_game(self, board, rectangles, score):
+        self.won_x = False
+        self.won_o = False
+        self.won = False
+        self.is_game_end = False
+        board.clear()
+        self.screen.fill((0, 0, 0))
+        rectangles.rects(self.screen)
+        score.score_x(self.screen)
+        score.score_o(self.screen)
+
 
 class Board:
     def __init__(self):
@@ -257,15 +268,7 @@ def main():
                         score.o_score += 1
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    game_variable.won_x = False
-                    game_variable.won_o = False
-                    game_variable.won = False
-                    game_variable.is_game_end = False
-                    board.clear()
-                    game_variable.screen.fill((0, 0, 0))
-                    rectangles.rects(game_variable.screen)
-                    score.score_x(game_variable.screen)
-                    score.score_o(game_variable.screen)
+                    game_variable.rest_game(board, rectangles, score)
         pygame.display.update()
 
 
