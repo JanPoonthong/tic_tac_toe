@@ -228,12 +228,14 @@ class Rectangle:
         """All the logic handling happens here"""
         position = [50, 225, 400]
         box_pos = [0, 1, 2]
+        count = 0
         if won:
             return
         for i in range(3):
             for j in range(3):
-                is_click(self.boxs, box_pos[i], box_pos[j], position[j], position[i],
+                is_click(self.boxs[count], box_pos[i], box_pos[j], position[j], position[i],
                          board, screen)
+                count += 1
 
 
 def main():
