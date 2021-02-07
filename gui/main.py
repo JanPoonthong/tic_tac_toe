@@ -7,7 +7,7 @@ pygame.init()
 
 pygame.display.set_caption("Tic Tac Toe")
 project_directory = os.path.dirname(__file__)
-"""Author https://www.flaticon.com/free-icon/tic-tac-toe_566294 for icon.png"""
+# Author https://www.flaticon.com/free-icon/tic-tac-toe_566294 for icon.png
 ICON = pygame.image.load(os.path.join(project_directory, "img/icon.png"))
 pygame.display.set_icon(ICON)
 
@@ -248,18 +248,18 @@ def main():
             if event.type == pygame.QUIT:
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
-                """Execute everytime when mouse is click"""
+                # Execute everytime when mouse is click
                 if not game_variable.won_x or game_variable.won_o:
                     rectangles.logic_handling(ai.is_player_click, game_variable.won,
                                               board, game_variable.screen)
                     score.score_x(game_variable.screen)
                     score.score_o(game_variable.screen)
                     game_variable.draw_check_win(board.check_win, draw_score.draw_text_won)
-                """If baord is fill(game tie) then draw tie text on the screen"""
+                # If baord is fill(game tie) then draw tie text on the screen
                 if (game_variable.won_x is False and game_variable.won_o is False
                         and board.is_board_fill()):
                     draw_score.tie(game_variable.screen)
-                """If game is not yet end, keep on checking who who(player or AI)"""
+                # If game is not yet end, keep on checking who who(player or AI)
                 if game_variable.is_game_end is False:
                     if board.check_win(1):
                         game_variable.is_game_end = True
@@ -269,7 +269,7 @@ def main():
                         game_variable.is_game_end = True
                         game_variable.won = True
                         score.o_score += 1
-            """If Space Bar is hit, rest the game state"""
+            # If Space Bar is hit, rest the game state
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     game_variable.rest_game(board, rectangles, score)
