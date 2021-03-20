@@ -201,20 +201,21 @@ def flip_ai_player():
 
 
 play_again = True
-while play_again:
-    game_still_going = True
-    current_player = "X"
-    winner = None
-    board = ["-", "-", "-",
-             "-", "-", "-",
-             "-", "-", "-"]
-    play_game()
+if __name__ == "__main__":
+    while play_again:
+        game_still_going = True
+        current_player = "X"
+        winner = None
+        board = ["-", "-", "-",
+                 "-", "-", "-",
+                 "-", "-", "-"]
+        play_game()
 
-    valid = False
-    while not valid:
-        if game_still_going is False:
-            play_again = input("Play again. [Y/n]: ")
-            if play_again == "n":
-                sys.exit(0)
-            elif play_again == "Y":
-                valid = True
+        valid = False
+        while not valid:
+            if game_still_going is False:
+                play_again = input("Play again. [Y/n]: ")
+                if play_again == "n":
+                    sys.exit(0)
+                elif play_again == "Y":
+                    valid = True
