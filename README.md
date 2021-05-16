@@ -7,6 +7,8 @@ can choose either one
 
 **Recommended: Graphical user interface with ai**
 
+![Demonstration of tictactoe](demo.gif)
+
 ## Requirements
 
 ### Linux
