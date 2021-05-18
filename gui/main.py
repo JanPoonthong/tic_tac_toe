@@ -110,17 +110,23 @@ class DrawScore:
         """When someone won, this function will run"""
         if won_x:
             self.over_text = OVER_FONT.render("X won", True, LIGHT_BLUE)
-            self.space_text = OVER_FONT.render("Space bar for clear", True, LIGHT_BLUE)
+            self.space_text = OVER_FONT.render(
+                "Space bar for clear", True, LIGHT_BLUE
+            )
             self.draw_text_pos(screen, 215, 230, 50, 300)
         elif won_o:
             self.over_text = OVER_FONT.render("Computer won", True, PINK)
-            self.space_text = OVER_FONT.render("Space bar for clear", True, PINK)
+            self.space_text = OVER_FONT.render(
+                "Space bar for clear", True, PINK
+            )
             self.draw_text_pos(screen, 140, 230, 50, 300)
 
     def tie(self, screen):
         """When game tie, this function will run"""
         self.over_text = OVER_FONT.render("Tie", True, DARK_BLUE)
-        self.space_text = OVER_FONT.render("Space bar for clear", True, DARK_BLUE)
+        self.space_text = OVER_FONT.render(
+            "Space bar for clear", True, DARK_BLUE
+        )
         self.draw_text_pos(screen, 225, 230, 50, 300)
 
 
@@ -143,10 +149,18 @@ class Score:
 class AI:
     def __init__(self):
         self.w_resize, self.h_resize = 110, 110
-        self.x_img = pygame.image.load(os.path.join(project_directory, "img/x.png"))
-        self.o_img = pygame.image.load(os.path.join(project_directory, "img/o.png"))
-        self.x_img = pygame.transform.scale(self.x_img, (self.w_resize, self.h_resize))
-        self.o_img = pygame.transform.scale(self.o_img, (self.w_resize, self.h_resize))
+        self.x_img = pygame.image.load(
+            os.path.join(project_directory, "img/x.png")
+        )
+        self.o_img = pygame.image.load(
+            os.path.join(project_directory, "img/o.png")
+        )
+        self.x_img = pygame.transform.scale(
+            self.x_img, (self.w_resize, self.h_resize)
+        )
+        self.o_img = pygame.transform.scale(
+            self.o_img, (self.w_resize, self.h_resize)
+        )
         self.current_player_turn = "X"
         self.current_player = "X"
 
@@ -162,7 +176,9 @@ class AI:
                 board.cell[row][column] = 2
                 self.current_player_turn = "X"
 
-    def hardcode_path(self, pos_one, pos_two, cell_one, cell_two, board, screen):
+    def hardcode_path(
+        self, pos_one, pos_two, cell_one, cell_two, board, screen
+    ):
         screen.blit(self.o_img, (pos_one, pos_two))
         board.cell[cell_one][cell_two] = 2
         self.current_player_turn = "X"
@@ -173,13 +189,29 @@ class AI:
             self.hardcode_path(225, 225, 1, 1, board, screen)
         elif board.cell[0][2] == 0:
             self.hardcode_path(400, 50, 0, 2, board, screen)
-        elif board.cell[0][1] == 1 and board.cell[0][2] == 1 and board.cell[0][0] == 0:
+        elif (
+            board.cell[0][1] == 1
+            and board.cell[0][2] == 1
+            and board.cell[0][0] == 0
+        ):
             self.hardcode_path(50, 50, 0, 0, board, screen)
-        elif board.cell[1][1] == 1 and board.cell[1][2] == 1 and board.cell[0][1] == 0:
+        elif (
+            board.cell[1][1] == 1
+            and board.cell[1][2] == 1
+            and board.cell[0][1] == 0
+        ):
             self.hardcode_path(50, 225, 1, 0, board, screen)
-        elif board.cell[2][1] == 1 and board.cell[2][2] == 1 and board.cell[2][0] == 0:
+        elif (
+            board.cell[2][1] == 1
+            and board.cell[2][2] == 1
+            and board.cell[2][0] == 0
+        ):
             self.hardcode_path(50, 400, 2, 0, board, screen)
-        elif board.cell[0][0] == 1 and board.cell[1][0] == 1 and board.cell[2][0] == 0:
+        elif (
+            board.cell[0][0] == 1
+            and board.cell[1][0] == 1
+            and board.cell[2][0] == 0
+        ):
             self.hardcode_path(50, 400, 2, 0, board, screen)
         else:
             self.pick_random_ai(board, screen)
@@ -191,12 +223,23 @@ class AI:
         elif self.current_player_turn == "Computer":
             self.current_player_turn = "X"
 
-    def is_player_click(self, position, index_board, index_board_two, x_pos,
-                        o_pos, board, screen):
+    def is_player_click(
+        self,
+        position,
+        index_board,
+        index_board_two,
+        x_pos,
+        o_pos,
+        board,
+        screen,
+    ):
         """Check all the logic here, including mouse click, placing images,
         updating the board"""
         pos = pygame.mouse.get_pos()
-        if position.collidepoint(pos) and board.cell[index_board][index_board_two] == 0:
+        if (
+            position.collidepoint(pos)
+            and board.cell[index_board][index_board_two] == 0
+        ):
             if self.current_player == "X":
                 screen.blit(self.x_img, (x_pos, o_pos))
                 board.cell[index_board][index_board_two] = 1
@@ -215,9 +258,11 @@ class Rectangle:
         position = [25, 200, 375]
         for i in range(3):
             for j in range(3):
-                self.boxs.append(pygame.draw.rect(screen, WHITE,
-                                                  (position[j], position[i],
-                                                   width, height)))
+                self.boxs.append(
+                    pygame.draw.rect(
+                        screen, WHITE, (position[j], position[i], width, height)
+                    )
+                )
 
     def logic_handling(self, is_click, won, board, screen):
         """All the logic handling happens here"""
@@ -228,8 +273,15 @@ class Rectangle:
             return
         for i in range(3):
             for j in range(3):
-                is_click(self.boxs[count], box_pos[i], box_pos[j], position[j],
-                         position[i], board, screen)
+                is_click(
+                    self.boxs[count],
+                    box_pos[i],
+                    box_pos[j],
+                    position[j],
+                    position[i],
+                    board,
+                    screen,
+                )
                 count += 1
 
 
@@ -250,14 +302,23 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 # Execute everytime when mouse is click
                 if not game_variable.won_x or game_variable.won_o:
-                    rectangles.logic_handling(ai.is_player_click, game_variable.won,
-                                              board, game_variable.screen)
+                    rectangles.logic_handling(
+                        ai.is_player_click,
+                        game_variable.won,
+                        board,
+                        game_variable.screen,
+                    )
                     score.score_x(game_variable.screen)
                     score.score_o(game_variable.screen)
-                    game_variable.draw_check_win(board.check_win, draw_score.draw_text_won)
+                    game_variable.draw_check_win(
+                        board.check_win, draw_score.draw_text_won
+                    )
                 # If baord is fill(game tie) then draw tie text on the screen
-                if (game_variable.won_x is False and game_variable.won_o is False
-                        and board.is_board_fill()):
+                if (
+                    game_variable.won_x is False
+                    and game_variable.won_o is False
+                    and board.is_board_fill()
+                ):
                     draw_score.tie(game_variable.screen)
                 # If game is not yet end, keep on checking who who(player or AI)
                 if game_variable.is_game_end is False:
@@ -276,5 +337,5 @@ def main():
         pygame.display.update()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

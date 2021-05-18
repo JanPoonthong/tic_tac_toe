@@ -5,9 +5,7 @@ import sys
 game_still_going = True
 current_player = "X"
 winner = None
-board = ["-", "-", "-",
-         "-", "-", "-",
-         "-", "-", "-"]
+board = ["-", "-", "-", "-", "-", "-", "-", "-", "-"]
 
 # Global variables(Computer AI)
 ai_turn = "X"
@@ -22,9 +20,11 @@ def display_board():
 
 
 def play_game():
-    which_mode = input("""1. 2 Players
+    which_mode = input(
+        """1. 2 Players
 2. Computer(AI)
-: """)
+: """
+    )
 
     if which_mode == "1":
         display_board()
@@ -169,8 +169,7 @@ def ai(player_ai):
 
         valid_ai = False
         while not valid_ai:
-            while position not in ["1", "2", "3", "4", "5", "6", "7", "8",
-                                   "9"]:
+            while position not in ["1", "2", "3", "4", "5", "6", "7", "8", "9"]:
                 position = input("Invalid input, Choose a position from 1-9: ")
 
             position = int(position) - 1
@@ -206,9 +205,7 @@ if __name__ == "__main__":
         game_still_going = True
         current_player = "X"
         winner = None
-        board = ["-", "-", "-",
-                 "-", "-", "-",
-                 "-", "-", "-"]
+        board = ["-", "-", "-", "-", "-", "-", "-", "-", "-"]
         play_game()
 
         valid = False
